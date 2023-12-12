@@ -1,0 +1,8 @@
+BAZA DANYCH
+	serwer: parking_db
+
+	użytkownik: root
+	hasło: root
+
+	użytkownik: db_user
+	hasło: db_user

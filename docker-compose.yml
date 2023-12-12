@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  parking_db:
+    container_name: parking_db
+    restart: always
+    platform: linux/x86_64
+    build: ./database
+    volumes:
+      - ./database/db:/docker-entrypoint-initdb.d
+      - ./database/conf.d:/etc/mysql/conf.d
+    ports:
+      - "3307:3306"
+    env_file:
+      - ./database/local.env
+    # pseudo terminal
+    tty: true
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    restart: always
+    ports:
+      - '8077:80'
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOSTS=parking_db
