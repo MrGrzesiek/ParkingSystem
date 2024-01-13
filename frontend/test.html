@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Parking Website</title>
+    <style>
+        /* Custom styles */
+        .parking-spot {
+            border: 1px solid #4CAF50; /* Green border */
+            background-color: #4CAF50; /* Green background */
+            color: #fff; /* White text */
+            height: 60px; /* Adjust height */
+            width: 100%;
+            margin: 5px;
+            text-align: center;
+            line-height: 60px;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Parking Website</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Dropdown
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Option 1</a>
+                    <a class="dropdown-item" href="#">Option 2</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Another Option</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <!-- Add left-side panel content here -->
+            </div>
+        </nav>
+
+        <main role="main" class="col-md-10 ml-sm-auto col-lg-10 px-4">
+            <div class="row" id="parkingRow"></div>
+        </main>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    // Generate 5 columns of parking spots using JavaScript
+    document.addEventListener("DOMContentLoaded", function () {
+        var parkingRow = document.getElementById("parkingRow");
+
+        for (var i = 1; i <= 5; i++) {
+            var column = document.createElement("div");
+            column.className = "col-md-2";
+
+            for (var j = 1; j <= 10; j++) {
+                var parkingSpot = document.createElement("div");
+                parkingSpot.className = "parking-spot";
+                parkingSpot.innerText = "Spot " + (i * 10 + j);
+                column.appendChild(parkingSpot);
+            }
+
+            parkingRow.appendChild(column);
+        }
+    });
+</script>
+
+</body>
+</html>
