@@ -1,0 +1,78 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+body {
+    background-image: url(../RESOURCES/IMAGE/gate_page_background.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    height: 100%;
+}
+    .div5 { grid-area: 5 / 2 / 6 / 3; }
+    .div6 { grid-area: 2 / 3 / 6 / 4; }
+    .content {
+        display: grid;
+        grid-template-columns: 40% 50% 10%;
+        grid-template-rows: 16% 16% 16% 16% 16% 16%;
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
+        height: 100%;
+    }
+.time {
+    font-size:1vw;
+    color: white;
+    font-family: 'Radioland';
+    grid-area: 1 / 1 / 2 / 2;
+}
+.parkin-state {
+    background-color: #d3d3d3;
+    padding: 20px;
+    text-align: center;
+    font-size: 18px;
+    grid-area: 2 / 2 / 3 / 3;
+}
+
+#formularz {
+    grid-area: 3 / 2 / 4 / 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(5, 20%);
+    grid-template-rows: 60% 40%;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+  }
+  .div1 {  }
+.div2 { }
+.div3 {  }
+.div4 { grid-area: 2 / 2 / 3 / 3; }
+.div5 { grid-area: 2 / 4 / 3 / 5; }
+
+#tekstowe-pole {
+    grid-area: 1 / 2 / 2 / 5;
+    font-size: 16px;
+    padding: 10px;
+    margin-right: 10px;
+    width: 70%;
+  }
+
+#przycisk-czyszczenia{
+    font-size: 16px;
+    padding: 10px;
+    grid-area: 1 / 1 / 2 / 2;
+}
+#przycisk-enter{
+    font-size: 16px;
+    padding: 10px;
+    grid-area: 1 / 5 / 2 / 6;
+}
+  .rodzaj-operacji{
+    grid-area: 2 / 2 / 3 / 5; 
+  }
+@font-face {
+    font-family: 'Radioland';
+    src: url('../RESOURCES/FONT/RADIOLANDSLIM.ttf') format('truetype');
+}

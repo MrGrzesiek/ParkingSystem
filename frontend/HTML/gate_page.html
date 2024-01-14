@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="../CSS/gate_page.css">
+    </head>
+    <body>
+        <div id="content" class="content">
+            <div id="time" class="time"></div>
+            <div id="stan-parkingu" class="parkin-state">Stan parkingu: Wolne miejsca</div>
+            <div id="formularz">
+                <input type="text" id="tekstowe-pole" placeholder="Wpisz tekst">
+                <button id="przycisk-czyszczenia" onclick="czyscPole()">Czyść</button>
+                <button id="przycisk-enter" onclick="przyciskEnter()">Enter</button>
+                <br>
+                <div class="rodzaj-operacji">
+                    <label>
+                        <input type="radio" name="opcja" value="opcja1"> Opcja 1
+                    </label>
+                    <label>
+                        <input type="radio" name="opcja" value="opcja2"> Opcja 2
+                    </label>
+                </div>
+            </div>
+        </div>
+        <script src="../JS/time.js"></script>
+        <script src="../JS/in_out_form.js"></script>
+    </body>
+</html>
