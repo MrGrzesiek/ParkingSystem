@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="../RESOURCES/IMAGE/icon.png" type="image/x-icon">
+
+        <title>Parking bramka</title>
+
+        <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+
+        <link rel="stylesheet" href="../CSS/gate_page.css">
+        <link rel="stylesheet" href="../CSS/imput_style.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    </head>
+    <body>
+        <div id="content" class="content">
+            <div id="time" class="time"></div>
+            <div class="logo"></div>
+            <div id="parkin-state" class="parkin-state">
+                Stan parkingu: 
+                Wolne miejsca
+            </div>
+            <div class="message">Wprowadź numer rejestracyjny</div>
+            <div id="formularz">
+                <input type="text" id="tekstowe-pole" placeholder="Podaj numer rejestracyjny">
+                <button id="przycisk-czyszczenia" class="bi bi-arrow-left" onclick="czyscPole()"></button>
+                <button id="przycisk-enter" class="bi bi-check-lg" onclick="przyciskEnter()"></button>
+                <br>
+                <div class="rodzaj-operacji">
+                    <label>
+                        <input type="radio" name="opcja" value="in"> Wjazd
+                    </label>
+                    <label>
+                        <input type="radio" name="opcja" value="out"> Wyjazd
+                    </label>
+                </div>
+            </div>
+            <div class="error_message">
+                Błedy do obsłużenia przez JS
+            </div>
+            <div class="price_message">
+                Cennik
+            </div>
+            <div id="price-list" class="price_list">
+                Ceny generowane przez JS
+            </div>
+            <div class="TODO">
+                API:<br>
+                -Pobrac stawki z bazy<br>
+                -Pobrac stan parkingu z bazy<br>
+                -Wyslac auto do bazy dane(data wjazdu,numer rej,zdjecie,wylosowane miejsce)<br>
+                -Pobrac liste dostepnych miejsc<br>
+                -Sprwadzac czy podany numer rej jest w bazie<br>
+                -Przy wyjezdzie zdjac auto z bazy i policzyc oplate<br>
+
+
+            </div>
+        </div>
+        <script src="../JS/time.js"></script>
+        <script src="../JS/in_out_form.js"></script>
+    </body>
+</html>
