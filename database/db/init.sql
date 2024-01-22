@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `spot`
  `status`         int NOT NULL ,
  `reg_number`     varchar(20) NOT NULL ,
  `entry_time`     datetime NOT NULL ,
- `departure_time` datetime NOT NULL ,
+ `departure_time` datetime,
 
 PRIMARY KEY (`id`)
 );
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `entry`
  `id`         int NOT NULL ,
  `reg_number` varchar(20) NOT NULL ,
  `entry_time` datetime NOT NULL ,
- `photo`      varchar(100) NOT NULL ,
+ `photo_name` varchar(100) NOT NULL ,
 
 PRIMARY KEY (`id`)
 );
@@ -57,14 +57,10 @@ CONSTRAINT `FK_5` FOREIGN KEY `FK_1` (`entry_id`) REFERENCES `entry` (`id`)
 CREATE TABLE IF NOT EXISTS `visit_history`
 (
  `id`            int NOT NULL ,
- `depature_time` datetime NOT NULL ,
+ `departure_time` datetime NOT NULL ,
  `payment_id`    int NOT NULL ,
 
 PRIMARY KEY (`id`),
 KEY `FK_1` (`payment_id`),
 CONSTRAINT `FK_4` FOREIGN KEY `FK_1` (`payment_id`) REFERENCES `payment` (`id`)
 );
-
-ALTER TABLE parking_rates
-    ADD CONSTRAINT unique_parking_rate
-    CHECK ((SELECT COUNT(*) FROM parking_rates) = 1); 
