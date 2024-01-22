@@ -1,0 +1,37 @@
+<mxfile host="app.diagrams.net" modified="2024-01-22T18:11:21.656Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 OPR/106.0.0.0" etag="1RhmpHkGtNzNTHwU4i4x" version="22.1.18" type="device">
+  <diagram name="Page-1" id="Qm5mEscmEo61juyZLR7R">
+    <mxGraphModel dx="1402" dy="777" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="DqvrX8p3gBnZ1xbAgyRp-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="DqvrX8p3gBnZ1xbAgyRp-1" target="DqvrX8p3gBnZ1xbAgyRp-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="DqvrX8p3gBnZ1xbAgyRp-1" value="Klient" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="320" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="DqvrX8p3gBnZ1xbAgyRp-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="DqvrX8p3gBnZ1xbAgyRp-2" target="DqvrX8p3gBnZ1xbAgyRp-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="DqvrX8p3gBnZ1xbAgyRp-2" value="API serwera" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="320" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="DqvrX8p3gBnZ1xbAgyRp-3" value="Database connector" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="320" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="DqvrX8p3gBnZ1xbAgyRp-6" value="Grzesiek" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="170" y="250" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="DqvrX8p3gBnZ1xbAgyRp-7" value="Adam" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="370" y="250" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="DqvrX8p3gBnZ1xbAgyRp-8" value="Mateusz" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="570" y="250" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="DqvrX8p3gBnZ1xbAgyRp-9" value="&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Funkcje:&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;@GET&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;ul&gt;&lt;li&gt;spot/reserve () - sprawdzić czy auto może wjechać, zwrócić miejsce&lt;/li&gt;&lt;li&gt;spot/all (None) -&amp;gt; dane wszystkich miejsc&lt;/li&gt;&lt;li&gt;spot/info (spot_id: int) -&amp;gt; {status: int, reg_number: string, entry_date: EPOCH_TIMESTAMP | None, exit_date: EPOCH_TIMESTAMP | None}dane miejsca park.&lt;/li&gt;&lt;li style=&quot;border-color: var(--border-color);&quot;&gt;spot/history/{place_id} -&amp;gt; {entry_date: EPOCH_TIMESTAMP, exit_date: EPOCH_TIMESTAMP, reg_number: string, spot_id: int, fee: int}&lt;/li&gt;&lt;li&gt;rates/all (None) -&amp;gt; {hourly: float, entry_grace_period: time??, exit_grace_period: time??}&lt;/li&gt;&lt;li&gt;rates/for_client (reg_number: string) -&amp;gt; grosz: int&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;client/image (reg_number: string) -&amp;gt; file_name: string&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;&lt;div&gt;@POST&lt;/div&gt;&lt;div&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;user/login (email: string, pwd_hash: string) -&amp;gt; None&lt;/span&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;client/image (file_name: string) -&amp;gt; None&lt;/li&gt;&lt;/ul&gt;&lt;div&gt;@UPDATE&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;ul&gt;&lt;li style=&quot;border-color: var(--border-color);&quot;&gt;spots/free_spot (spot_id) -&amp;gt; None - zwolnienie miejsca przy wyjeździe&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry y="430" width="850" height="300" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
