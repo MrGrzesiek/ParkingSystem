@@ -1,0 +1,79 @@
+.nav-link {
+    color: #e65025!important;
+}
+body{
+    background-image: url(../RESOURCES/IMAGE/gate_page_background.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    height: 100%;
+    font-family: 'Roboto';
+    color: #e65025!important;
+}
+.navbar-toggler {
+    background-color: #e65025!important;
+    border: 1px solid #e65025!important;
+}
+.parking-space {
+    color: white;
+    height: 50px;
+    border: 1px solid black;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+/* Firefox */
+* {
+    scrollbar-width: auto;
+    scrollbar-color: #e65025 #000000;
+}
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 15px;
+}
+*::-webkit-scrollbar-track {
+    background: #000000;
+}
+*::-webkit-scrollbar-thumb {
+    background-color: #e65025;
+    border-radius: 0px;
+    border: 0px none #ffffff;
+}
+.occupied {
+    background-color: red;
+}
+
+.available {
+    background-color: green;
+}
+.time {
+    font-size:4rem;
+    color: #e65025;
+    font-family: 'DISPLAY';
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+.parking-status {
+    font-size:2.5rem;
+    color: #e65025;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+.border-decoration{
+    border: 2px solid #e65025;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: url('../RESOURCES/FONT/Roboto-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'DISPLAY';
+    src: url('../RESOURCES/FONT/Open 24 Display St.ttf') format('truetype');
+}
