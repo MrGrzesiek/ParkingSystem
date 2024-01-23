@@ -22,3 +22,15 @@ services:
     environment:
       - PMA_ARBITRARY=1
       - PMA_HOSTS=parking_db
+
+  server:
+    container_name: server
+    platform: linux/x86_64
+    build: ./backend/server
+    ports:
+      - "8080:80"
+    env_file:
+      - ./backend/server/local.env
+    depends_on:
+      - parking_db
+    tty: true

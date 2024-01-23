@@ -12,8 +12,8 @@ CREATE TABLE IF NOT EXISTS `spot`
 (
  `id`             int NOT NULL ,
  `status`         int NOT NULL ,
- `reg_number`     varchar(20) NOT NULL ,
- `entry_time`     datetime NOT NULL ,
+ `reg_number`     varchar(20),
+ `entry_time`     datetime,
  `departure_time` datetime,
 
 PRIMARY KEY (`id`)

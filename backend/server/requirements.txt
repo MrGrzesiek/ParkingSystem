@@ -1,0 +1,7 @@
+fastapi
+httpx
+passlib[bcrypt]
+pymysql
+cryptography
+pydantic[email]
+pyjwt
