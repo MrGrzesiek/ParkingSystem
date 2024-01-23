@@ -18,7 +18,7 @@ async function createNavi() {
   
     const brandLink2 = document.createElement('a');
     brandLink2.classList.add('navbar-brand', 'me-2');
-    brandLink2.href = 'index.html';
+    brandLink2.href = '../HTML/admin_panel.html';
   
     const img = document.createElement('img');
     img.src = '../RESOURCES/IMAGE/logo.png';
@@ -45,19 +45,11 @@ async function createNavi() {
   
     const links = [];
   
-    if (userLoggedIn) {
+    if (true) {
       links.push(
-        { href: 'todo.html', text: 'TO DO', iconClass: 'bi-list-task' },
-        { href: 'basket_page.html', text: 'ulubione', iconClass: 'bi-heart' },
-      );
-  
-      if (feedback !== 'false' && feedback !== null) {
-        links.push({ href: 'new_offer.html', text: 'Dodaj ogłoszenie', iconClass: 'bi-plus-square' });
-      }
-  
-      links.push(
-        { href: 'profil.html', text: 'Profil', iconClass: 'bi-person-square' },
-        { href: '#', text: 'Wyloguj', iconClass: 'bi-box-arrow-in-left', id: 'logoutBtn' }
+        { href: '../HTML/chart.html', text: 'Wykres popularności', iconClass: 'bi-bar-chart-line-fill' },
+        { href: '#', text: 'Zmiana stawek', iconClass: 'bi-currency-exchange' },
+        { href: '../HTML/admin_log_panel.html', text: 'Wyloguj', iconClass: 'bi-box-arrow-in-left', id: 'logoutBtn' }
       );
     } else {
       links.push({ href: 'login.html', text: 'Zaloguj', iconClass: 'bi-box-arrow-in-left' });

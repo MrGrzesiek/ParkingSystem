@@ -4,99 +4,59 @@
 <head>
     <meta charset="UTF-8">
     <link rel="icon" href="../RESOURCES/IMAGE/icon.png" type="image/x-icon">
+
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../CSS/admin_panel.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <title>Smart Park</title>
-    <style>
-        /* Custom styles */
-        .parking-spot {
-            border: 1px solid #4CAF50;
-            /* Green border */
-            background-color: #4CAF50;
-            /* Green background */
-            color: #fff;
-            /* White text */
-            height: 60px;
-            /* Adjust height */
-            width: 100%;
-            margin: 5px;
-            text-align: center;
-            line-height: 60px;
-        }
-        .new-element {
-        margin-top: 20px; /* Adjust the margin based on your needs */
-        }
-        body {
-        padding-top: 70px; /* Adjust this value based on your navigation bar's height */
-    }
-    </style>
 </head>
 
 <body>
 
     <!-- Nawigacja -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-        <div class="container-fluid">
-            <!-- Logo w prawym górnym rogu -->
-            <a class="navbar-brand" href="#">
-                <img src="../RESOURCES/IMAGE/logo.png" alt="Logo" height="30">
-            </a>
-    
-            <!-- Centered text -->
-            <div class="navbar-text mx-auto text-center">
-                Ilość miejsc na parkingu: 50
-            </div>
-    
-            <!-- Przycisk "hamburger" dla menu na małych ekranach -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-    
-            <!-- Menu -->
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Wykres popularności</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Zmiana stawek</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Wyloguj</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <div class="container mt-5 new-element">
-        <div class="row">
-            <!-- Left Part -->
-            <div class="col-md-6">
-                <h2>Left Part</h2>
-                <p>This is the content of the left part.</p>
-            </div>
+    <div class="nav-color-main">
 
-            <!-- Right Part -->
-            <div class="col-md-6">
-                <h2>Right Part</h2>
-                <p>This is the content of the right part.</p>
+    </div>
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-7">
+                <!-- Zegar -->
+                <div id="time" class="time"></div>
+            </div>
+            <div class="col-md-5 border-decoration">
+                <!-- Stan parkingu -->
+                <h1 class="text-center">Stan parkingu</h1>
+                <div id="parking-status" class="parking-status"></div>
             </div>
         </div>
     </div>
-    <!--
-        <div class="container-fluid">
+    <div class="container mt-5 new-element">
         <div class="row">
-            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-                <div class="sidebar-sticky">
-                    
+            <!-- Mapa parkingu -->
+            <div class="col-md-7 " id="leftPart">
+                <div class="row row-cols-5 g-2" id="parkingMap"></div>
+            </div>
+
+            <!-- Right Part -->
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-12 border-decoration">
+                        <h2>Aktulane informacje o miejscu</h2>
+                        <div id="currentStatus"></div>
+                    </div>
                 </div>
-            </nav>
-    
-            <main role="main" class="col-md-10 ml-sm-auto col-lg-10 px-4 mt-3">
-                
-                <div class="row" id="parkingRow"></div>
-            </main>
+                <br>
+                <div class="row">
+                    <div class="col-md-12 border-decoration">
+                        <h2>Historia</h2>
+                        <div id="history"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div>
@@ -108,28 +68,9 @@
         -aktualny stan miejsca<br>
     </div>
     
-    <script>
-        // Generate 5 columns of parking spots using JavaScript
-        document.addEventListener("DOMContentLoaded", function () {
-            var parkingRow = document.getElementById("parkingRow");
-
-            for (var i = 1; i <= 5; i++) {
-                var column = document.createElement("div");
-                column.className = "col-md-2";
-
-                for (var j = 1; j <= 10; j++) {
-                    var parkingSpot = document.createElement("div");
-                    parkingSpot.className = "parking-spot";
-                    parkingSpot.innerText = "Spot " + (i * 10 + j);
-                    column.appendChild(parkingSpot);
-                }
-
-                parkingRow.appendChild(column);
-            }
-        });
-    </script>
-        -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../JS/navi.js"></script>
+    <script src="../JS/time.js"></script>
+    <script src="../JS/admin_panel.js"></script>
 </body>
 
 </html>
