@@ -2,6 +2,7 @@ import httpx
 import uvicorn
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from db_connector import *
 
 #setup logger
 import logging
