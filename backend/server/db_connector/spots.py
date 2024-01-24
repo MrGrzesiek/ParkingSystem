@@ -3,9 +3,7 @@ from .query import query_get, query_put, query_update
 from .auth import Auth
 import logging
 
-
 auth_handler = Auth()
-
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -103,6 +101,18 @@ def free_spot(spot_id):
                  )
     logger.debug(f"Freed spot {spot_id}")
     return None
+
+
+def get_spot_by_reg_number(reg_number):
+    spot = query_get("""
+                    SELECT * FROM spots WHERE reg_number = %s;
+                    """,
+                     (
+                         reg_number
+                     )
+                     )
+    logger.debug(f"Got spot: {spot}")
+    return spot[0]
 
 
 def __get_free_spot_id__():
