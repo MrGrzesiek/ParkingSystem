@@ -36,6 +36,35 @@ def read_root():
 def test_connection():
     return {"status": "success", "message": "Connected successfully!"}
 
+@app.get("/spot/all")
+def APIgetSpots():
+    return get_all_spots()
+
+@app.get("/spot/reserve/{registration}")
+def APIreserveSpot(registration: str):
+    return reserve_spot(registration)
+
+@app.get("/spot/info/{spotID}")
+def APIGetSpotInfo(spotID: str):
+    return get_spot_info(spotID)
+
+@app.get("/spot/history/{placeID}")
+def APIGetSpotHistory(placeID: str):
+    return get_spot_history(placeID)
+
+#@app.get("/rates/all")
+
+#@app.get("/rates/forClient")
+
+#@app.get("/client/image")
+
+
+@app.post("/user/login/{email}&{pwdHash}")
+def APILoginUser(email: str, pwd: str):
+    logger.log(signin_user(email, pwd))
+
+#@app.post("/client/image")
+
 
 
 if __name__ == "__main__":
