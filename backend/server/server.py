@@ -41,9 +41,9 @@ def test_connection():
 def APIgetSpots():
     return get_all_spots()
 
-@app.get("/spot/reserve/{registration}")
-def APIreserveSpot(registration: str):
-    return reserve_spot(registration)
+@app.get("/spot/reserve/{registration}/{photo_name}")
+def APIreserveSpot(registration: str, photo_name: str):
+    return reserve_spot(registration, photo_name)
 
 #info about spot by id
 @app.get("/spot/info/{spotID}")
