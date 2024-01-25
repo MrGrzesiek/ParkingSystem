@@ -54,6 +54,13 @@ KEY `FK_1` (`entry_id`),
 CONSTRAINT `FK_5` FOREIGN KEY `FK_1` (`entry_id`) REFERENCES `entry` (`id`)
 );
 
+CREATE TABLE IF NOT EXISTS `users`
+(
+ `id`       int NOT NULL ,
+ `email`    varchar(100) NOT NULL ,
+ `password_hash` varchar(200) NOT NULL,
+PRIMARY KEY (`id`)
+);
 CREATE TABLE IF NOT EXISTS `visit_history`
 (
  `id`            int NOT NULL ,
@@ -118,3 +125,5 @@ INSERT INTO visit_history (id, departure_time, payment_id) VALUES (1, '2024-01-0
                                                                    (7, '2024-01-07 21:37:00', 7),
                                                                    (8, '2024-01-09 07:01:04', 8),
                                                                    (9, '2024-01-01 00:33:12', 9);
+
+INSERT INTO users (id, email, password_hash) VALUES (1, 'admin@gmail.com', '60a5d3e4100fe8afa5ee0103739a45711d50d7f3ba7280d8a95b51f5d04aa4b8');

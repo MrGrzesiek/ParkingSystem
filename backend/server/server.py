@@ -59,7 +59,7 @@ def APIGetSpotHistory(placeID: str):
 #@app.get("/client/image")
 
 
-@app.post("/user/login/{email}&{pwdHash}")
+@app.post("/user/login/{email}/{pwdHash}")
 def APILoginUser(email: str, pwd: str):
     logger.log(signin_user(email, pwd))
 
