@@ -1,18 +1,29 @@
 const apiBaseUrl = 'http://localhost:8000';
 
 document.addEventListener("DOMContentLoaded", async function() {
+    refreshParkingStatus();
+});
+
+async function refreshParkingStatus() {
     // Stan parkingu (liczba dostępnych miejsc)
-    var totalParkingSpaces = 10;
-    var occupiedParkingSpaces = 3;
+    var totalParkingSpaces = 0;
+    var occupiedParkingSpaces = 0;
     await renderParkingMap();
 
     // Obliczanie dostępnych miejsc
-    var availableParkingSpaces = calculateParkingStatus(totalParkingSpaces, occupiedParkingSpaces);
-
-    // Wyświetlanie stanu parkingu
-    displayParkingStatus(availableParkingSpaces, totalParkingSpaces);
-    
-});
+    //var availableParkingSpaces = calculateParkingStatus(totalParkingSpaces, occupiedParkingSpaces);
+    fetch(apiBaseUrl + "/spot/number_of_free_out_of_all") // returns two numbers: number of free spots and number of all spots
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            occupiedParkingSpaces = data[0][0]["COUNT(status)"];
+            totalParkingSpaces = data[1][0]["COUNT(status)"];
+            console.log("occupiedParkingSpaces: " + occupiedParkingSpaces);
+            console.log("totalParkingSpaces: " + totalParkingSpaces);
+            // Wyświetlanie stanu parkingu
+            displayParkingStatus(occupiedParkingSpaces, totalParkingSpaces);
+        } )
+}
 
 function calculateParkingStatus(totalSpaces, occupiedSpaces) {
     return totalSpaces - occupiedSpaces;
@@ -88,5 +99,6 @@ async function renderParkingMap(){
 }
 setInterval(() => {
     renderParkingMap();
+    refreshParkingStatus();
     console.log('Wywołanie funkcji co 5 sekund');
   }, 1000);

@@ -130,10 +130,26 @@ def free_spot(spot_id):
                      spot_id,
                  )
                  )
-    logger.debug(f"Freed spot {spot_id}")
+    logger.info(f"Freed spot {spot_id}")
     return None
 
 
+def get_number_of_free_spots_out_of_all():
+    free_spots = query_get("""
+                    SELECT COUNT(status) FROM spot WHERE status = %s;
+                    """,
+                      (
+                            SPOT_FREE
+                      )
+                      )
+    all_spots = query_get("""
+                    SELECT COUNT(status) FROM spot;
+                    """,
+                        (
+                        )
+                        )
+    logger.info(f"Free spots: {free_spots} / {all_spots}")
+    return free_spots, all_spots
 def get_spot_by_reg_number(reg_number):
     spot = query_get("""
                     SELECT * FROM spot WHERE reg_number = %s;
