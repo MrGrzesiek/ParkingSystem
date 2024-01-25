@@ -1,5 +1,6 @@
 const apiBaseUrl = 'http://localhost:8000';
-
+const spotFree = 0;
+const spotTaken = 1;
 document.addEventListener("DOMContentLoaded", async function() {
     refreshParkingStatus();
 });
@@ -65,16 +66,36 @@ function generateParkingSpaces(states) {
 
         (function (parkingNumber) {
             parkingSpaceContent.onclick = function() {
-                displayParkingNumber(parkingNumber);
+                displaySpotDetails(parkingNumber);
             };
         })(i+1);
     }
 }
-function displayParkingNumber(parkingNumber) {
+function displaySpotDetails(parkingNumber) {
     var currentStatusElement = document.getElementById("currentStatus");
+    fetch(apiBaseUrl + "/spot/info/" + parkingNumber)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            /* {
+    "id": 2,
+    "status": 1,
+    "reg_number": "EL34",
+    "entry_time": "2024-01-25T20:47:43",
+    "departure_time": null
+}*/
+            /*currentStatusElement.textContent = "ID: " + data["id"] + "\n"
+                                            + "Status: " + (data["status"] == spotFree ? "Free" : "Occupied") + "\n"
+                                            + "Registration number: " + data["reg_number"] + "\n"
+                                            + "Entry time: " + data["entry_time"] + "\n"
+                                            + "Departure time: " + (data["departure_time"] == "null" ? "None" : data["departure_time"]) + "\n";*/
+            currentStatusElement.innerHTML = "<h4>Miejsce " + parkingNumber + "</h4>"
+                                            + "<h4>Stan: " + (data["status"] == spotFree ? "Wolne" : "Zajęte") + "</h4>"
+                                            + "<h4>Nr. rej: " + data["reg_number"] + "</h4>"
+                                            + "<h4>Czas wjazdu: " + data["entry_time"].replace("T", "      ") + "</h4>";
+        } )
+
     var historyElement = document.getElementById("history");
-    currentStatusElement.textContent = "Clicked on Parking Space " + parkingNumber;
-    historyElement.textContent = "Clicked on Parking Space " + parkingNumber;
 }
 
 async function getParkingStatus(){
