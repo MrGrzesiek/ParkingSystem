@@ -10,7 +10,7 @@ PRIMARY KEY (`id`)
 
 CREATE TABLE IF NOT EXISTS `spot`
 (
- `id`             int NOT NULL ,
+ `id`             int NOT NULL AUTO_INCREMENT ,
  `status`         int NOT NULL ,
  `reg_number`     varchar(20),
  `entry_time`     datetime,
@@ -21,7 +21,7 @@ PRIMARY KEY (`id`)
 
 CREATE TABLE IF NOT EXISTS `spot_history`
 (
- `id`             int NOT NULL ,
+ `id`             int NOT NULL AUTO_INCREMENT,
  `entry_time`     datetime NOT NULL ,
  `departure_time` datetime NOT NULL ,
  `reg_number`     varchar(20) NOT NULL ,
@@ -34,7 +34,7 @@ CONSTRAINT `FK_3` FOREIGN KEY `FK_1` (`spot_id`) REFERENCES `spot` (`id`)
 
 CREATE TABLE IF NOT EXISTS `entry`
 (
- `id`         int NOT NULL ,
+ `id`         int NOT NULL AUTO_INCREMENT,
  `reg_number` varchar(20) NOT NULL ,
  `entry_time` datetime NOT NULL ,
  `photo_name` varchar(100) NOT NULL ,
@@ -44,7 +44,7 @@ PRIMARY KEY (`id`)
 
 CREATE TABLE IF NOT EXISTS `payment`
 (
- `id`       int NOT NULL ,
+ `id`       int NOT NULL AUTO_INCREMENT,
  `data`     datetime NOT NULL ,
  `amount`   decimal NOT NULL ,
  `entry_id` int NOT NULL ,
@@ -56,14 +56,14 @@ CONSTRAINT `FK_5` FOREIGN KEY `FK_1` (`entry_id`) REFERENCES `entry` (`id`)
 
 CREATE TABLE IF NOT EXISTS `users`
 (
- `id`       int NOT NULL ,
+ `id`       int NOT NULL AUTO_INCREMENT,
  `email`    varchar(100) NOT NULL ,
  `password_hash` varchar(200) NOT NULL,
 PRIMARY KEY (`id`)
 );
 CREATE TABLE IF NOT EXISTS `visit_history`
 (
- `id`            int NOT NULL ,
+ `id`            int NOT NULL AUTO_INCREMENT,
  `departure_time` datetime NOT NULL ,
  `payment_id`    int NOT NULL ,
 
