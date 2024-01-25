@@ -109,7 +109,7 @@ def free_spot(spot_id):
                 INSERT INTO spot_history (
                     spot_id,
                     entry_time,
-                    exit_time,
+                    departure_time,
                     reg_number
                 ) VALUES (%s,%s,CURRENT_TIMESTAMP,%s);
                 """,
