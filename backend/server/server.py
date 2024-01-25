@@ -68,6 +68,9 @@ def APILoginUser(email: str, pwd: str):
 
 #@app.post("/client/image")
 
+@app.post("/spot/free/{spotID}")
+def APIFreeSpot(spotID: int):
+    free_spot(spotID)
 
 
 if __name__ == "__main__":

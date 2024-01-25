@@ -149,3 +149,15 @@ def __get_spot_by_id__(spot_id):
                      )
     logger.debug(f"Got spot: {spot[0]} for spot {spot_id}")
     return spot[0]
+
+
+def get_free_spots_count():
+    count = query_get("""
+                    SELECT * FROM spot WHERE status = 0;
+                    """,
+                      (
+                      )
+                      )
+    logger.debug(f"Free spots: {count}")
+    return count
+
