@@ -61,6 +61,10 @@ def APIGetSpotHistory(placeID: str):
 
 #@app.get("/client/image")
 
+@app.get("/spots/free")
+def APICountFreeSpots():
+    return get_free_spots_count
+
 #user login
 @app.post("/user/login/{email}/{pwdHash}")
 def APILoginUser(email: str, pwd: str):
@@ -69,7 +73,7 @@ def APILoginUser(email: str, pwd: str):
 #@app.post("/client/image")
 
 @app.post("/spot/free/{spotID}")
-def APIFreeSpot(spotID: int):
+def APIFreeSpot(spotID: str):
     free_spot(spotID)
 
 

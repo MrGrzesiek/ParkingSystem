@@ -187,7 +187,7 @@ def __get_spot_by_id(spot_id):
 
 def get_free_spots_count():
     count = query_get("""
-                    SELECT * FROM spot WHERE status = 0;
+                    SELECT COUNT(status) FROM spot WHERE status = 0;
                     """,
                       (
                       )

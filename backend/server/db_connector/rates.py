@@ -29,6 +29,7 @@ def get_rates():
 def get_rates_for_client(reg_number):
     spot = get_spot_by_reg_number(reg_number)
     minutes = __get_minutes_for_client(spot)
+    
 
 def __get_minutes_for_client(spot):
     if spot is None:
