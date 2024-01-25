@@ -18,12 +18,11 @@ def reserve_spot(reg_number) -> int:
     if spot is None:
         raise HTTPException(status_code=404, detail='No free spots')
     query_update("""
-                UPDATE spots SET status = %s, reg_number = %s, entry_time = %s WHERE id = %s;
+                UPDATE spot SET status = %s, reg_number = %s, entry_time = CURRENT_TIMESTAMP WHERE id = %s;
                 """,
                  (
                      SPOT_TAKEN,
                      reg_number,
-                     "CURRENT_TIMESTAMP",
                      spot,
                  )
                  )
@@ -34,7 +33,7 @@ def reserve_spot(reg_number) -> int:
 # Returns all spots data
 def get_all_spots():
     spots = query_get("""
-                    SELECT * FROM spots;
+                    SELECT * FROM spot;
                     """,
                       (
                       )
@@ -78,23 +77,21 @@ def free_spot(spot_id):
                     entry_time,
                     exit_time,
                     reg_number
-                ) VALUES (%s,%s,%s,%s);
+                ) VALUES (%s,%s,CURRENT_TIMESTAMP,%s);
                 """,
               (
                   spot['id'],
                   spot['entry_time'],
-                  "CURRENT_TIMESTAMP",
                   spot['reg_number'],
               )
               )
 
     # Free the spot
     query_update("""
-                UPDATE spots SET status = %s, reg_number = %s, entry_time = %s WHERE id = %s;
+                UPDATE spots SET status = %s, reg_number = %s, entry_time = NULL WHERE id = %s;
                 """,
                  (
                      SPOT_FREE,
-                     None,
                      None,
                      spot_id,
                  )
@@ -117,7 +114,7 @@ def get_spot_by_reg_number(reg_number):
 
 def __get_free_spot_id__():
     spot_id = query_get("""
-                    SELECT id FROM spots WHERE status = %s LIMIT 1;
+                    SELECT id FROM spot WHERE status = %s LIMIT 1;
                     """,
                         (
                             SPOT_FREE
@@ -127,12 +124,12 @@ def __get_free_spot_id__():
         logger.debug(f"No free spots")
         return None
     logger.debug(f"Got free spot id: {spot_id[0]['id']}")
-    return int(spot_id[0])
+    return int(spot_id[0]["id"])
 
 
 def __is_spot_taken__(spot_id) -> bool:
     spot = query_get("""
-                    SELECT status FROM spots WHERE id = %s;
+                    SELECT status FROM spot WHERE id = %s;
                     """,
                      (
                          spot_id
@@ -144,7 +141,7 @@ def __is_spot_taken__(spot_id) -> bool:
 
 def __get_spot_by_id__(spot_id):
     spot = query_get("""
-                    SELECT * FROM spots WHERE id = %s;
+                    SELECT * FROM spot WHERE id = %s;
                     """,
                      (
                          spot_id

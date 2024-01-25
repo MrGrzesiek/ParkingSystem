@@ -6,3 +6,7 @@ BAZA DANYCH
 
 	użytkownik: db_user
 	hasło: db_user
+
+TESTOWY USER
+	email: admin@gmail.com
+	hasło: dupa
