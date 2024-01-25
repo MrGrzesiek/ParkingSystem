@@ -36,6 +36,7 @@ def read_root():
 def test_connection():
     return {"status": "success", "message": "Connected successfully!"}
 
+#info about all spot
 @app.get("/spot/all")
 def APIgetSpots():
     return get_all_spots()
@@ -44,10 +45,12 @@ def APIgetSpots():
 def APIreserveSpot(registration: str):
     return reserve_spot(registration)
 
+#info about spot by id
 @app.get("/spot/info/{spotID}")
 def APIGetSpotInfo(spotID: str):
     return get_spot_info(spotID)
 
+#spot history by id
 @app.get("/spot/history/{placeID}")
 def APIGetSpotHistory(placeID: str):
     return get_spot_history(placeID)
@@ -58,7 +61,7 @@ def APIGetSpotHistory(placeID: str):
 
 #@app.get("/client/image")
 
-
+#user login
 @app.post("/user/login/{email}/{pwdHash}")
 def APILoginUser(email: str, pwd: str):
     logger.log(signin_user(email, pwd))

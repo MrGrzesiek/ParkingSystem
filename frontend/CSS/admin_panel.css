@@ -8,7 +8,7 @@ body{
     background-attachment: fixed;
     background-size: cover;
     height: 100%;
-    font-family: 'Roboto';
+    font-family: 'Roboto'!important;
     color: #e65025!important;
 }
 .navbar-toggler {
