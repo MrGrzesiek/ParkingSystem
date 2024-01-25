@@ -1,8 +1,9 @@
 const apiBaseUrl = 'http://localhost:8000';
 const spotFree = 0;
 const spotTaken = 1;
+const maxHistoryRecords = 5;
 document.addEventListener("DOMContentLoaded", async function() {
-    refreshParkingStatus();
+    await refreshParkingStatus();
 });
 
 async function refreshParkingStatus() {
@@ -19,8 +20,8 @@ async function refreshParkingStatus() {
             console.log(data)
             occupiedParkingSpaces = data[0][0]["COUNT(status)"];
             totalParkingSpaces = data[1][0]["COUNT(status)"];
-            console.log("occupiedParkingSpaces: " + occupiedParkingSpaces);
-            console.log("totalParkingSpaces: " + totalParkingSpaces);
+            //console.log("occupiedParkingSpaces: " + occupiedParkingSpaces);
+            //console.log("totalParkingSpaces: " + totalParkingSpaces);
             // Wyświetlanie stanu parkingu
             displayParkingStatus(occupiedParkingSpaces, totalParkingSpaces);
         } )
@@ -67,32 +68,57 @@ function generateParkingSpaces(states) {
         (function (parkingNumber) {
             parkingSpaceContent.onclick = function() {
                 displaySpotDetails(parkingNumber);
+                displaySpotHistory(parkingNumber);
             };
         })(i+1);
     }
 }
+
+async function displaySpotHistory(parkingNumber) {
+    var historyElement = document.getElementById("history");
+    fetch(apiBaseUrl + "/spot/history/" + parkingNumber)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            /*
+            [
+    {
+        "id": 9,
+        "entry_time": "2024-01-11T00:16:45",
+        "departure_time": "2024-01-01T00:33:12",
+        "reg_number": "EL-111a",
+        "spot_id": 1
+    },
+    {
+        "id": 1,
+        "entry_time": "2024-01-01T00:10:45",
+        "departure_time": "2024-01-01T00:33:12",
+        "reg_number": "EL-111a",
+        "spot_id": 1
+    }
+]
+             */
+            // max history records is 5
+            var historyRecords = data.length;
+            historyElement.innerHTML = "";
+            for (var i = 0; i < historyRecords && i < maxHistoryRecords; i++) {
+                historyElement.innerHTML += "<h4> Nr. rej: " + data[i]["reg_number"] + "</h4> " +
+                    "<h4> Czas wjazdu: " + data[i]["entry_time"].replace("T", "      ") + "</h4> " +
+                    "<h4> Czas wyjazdu: " + data[i]["departure_time"].replace("T", "      ") + "</h4> " + "<br>";
+            }
+        } )
+}
+
 function displaySpotDetails(parkingNumber) {
     var currentStatusElement = document.getElementById("currentStatus");
     fetch(apiBaseUrl + "/spot/info/" + parkingNumber)
         .then(response => response.json())
         .then(data => {
-            console.log(data)
-            /* {
-    "id": 2,
-    "status": 1,
-    "reg_number": "EL34",
-    "entry_time": "2024-01-25T20:47:43",
-    "departure_time": null
-}*/
-            /*currentStatusElement.textContent = "ID: " + data["id"] + "\n"
-                                            + "Status: " + (data["status"] == spotFree ? "Free" : "Occupied") + "\n"
-                                            + "Registration number: " + data["reg_number"] + "\n"
-                                            + "Entry time: " + data["entry_time"] + "\n"
-                                            + "Departure time: " + (data["departure_time"] == "null" ? "None" : data["departure_time"]) + "\n";*/
+            console.log(data);
             currentStatusElement.innerHTML = "<h4>Miejsce " + parkingNumber + "</h4>"
                                             + "<h4>Stan: " + (data["status"] == spotFree ? "Wolne" : "Zajęte") + "</h4>"
                                             + "<h4>Nr. rej: " + data["reg_number"] + "</h4>"
-                                            + "<h4>Czas wjazdu: " + data["entry_time"].replace("T", "      ") + "</h4>";
+                                            + "<h4>Czas wjazdu: " + data["entry_time"].replace("T", "      ") + "\n" + "</h4>";
         } )
 
     var historyElement = document.getElementById("history");
