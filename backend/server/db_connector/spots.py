@@ -87,7 +87,7 @@ def get_spot_info(spot_id):
 def get_spot_history(spot_id):
     history = query_get("""
                     SELECT * FROM spot_history WHERE spot_id = %s
-                    SORT BY entry_time DESC;
+                    ORDER BY entry_time DESC;
                     """,
                         (
                             spot_id
