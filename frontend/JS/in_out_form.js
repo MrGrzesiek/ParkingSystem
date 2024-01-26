@@ -125,7 +125,7 @@ function przyciskEnter() {
         errorElement.textContent = "";
   
         if (numerRejestracyjny === "" || typeof rodzajOperacji === "undefined") {
-          errorElement.textContent = "Wprowadź numer rejestracyjny i wybierz rodzaj operacji.";
+          errorElement.textContent = "Wprowadź numer rejestracyjny.";
         } else {
           console.log("Numer rejestracyjny: " + numerRejestracyjny + ", Rodzaj operacji: " + rodzajOperacji);
   
@@ -168,13 +168,15 @@ function przyciskEnter() {
       var czas_wyjazdu = new Date();
       oplata=10;
       if (numerRejestracyjny === "" || typeof rodzajOperacji === "undefined") {
-        errorElement.textContent = "Wprowadź numer rejestracyjny i wybierz rodzaj operacji.";
+        errorElement.textContent = "Wprowadź numer rejestracyjny.";
       } else {
         const czasPostoju = obliczCzasPostoju(1706017455);
         console.log(`Czas postoju: ${czasPostoju.godziny} godzin i ${czasPostoju.minuty} minut`);
         createRecipe(numerRejestracyjny, czas,czas_wyjazdu, numerMiejsca,oplata)
       }
       break;
+      default: 
+        errorElement.textContent = "Wybierz rodzaj operacji.";
   }
 
 }

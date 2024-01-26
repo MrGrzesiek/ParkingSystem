@@ -1,3 +1,4 @@
+const api = 'http://localhost:8000';
 async function createNavi() {
 
     const userLoggedIn = localStorage.getItem('user');
@@ -90,7 +91,7 @@ async function createNavi() {
 
   function createModal() {
     return new Promise((resolve, reject) => {
-        fetch(apiBaseUrl + "/rates/all")
+        fetch(api + "/rates/all")
             .then(response => response.json())
             .then(data => {
                 const modal = document.createElement('div');
@@ -153,7 +154,7 @@ async function createNavi() {
                     const entry_grace_minutes = inputElements[1].value;
                     const exit_grace_minutes = inputElements[2].value;
 
-                    fetch(apiBaseUrl + `/rates/update/${hourly_rate}/${entry_grace_minutes}/${exit_grace_minutes}`, {
+                    fetch(api + `/rates/update/${hourly_rate}/${entry_grace_minutes}/${exit_grace_minutes}`, {
                         method: 'POST'
                     })
                         .then(response => response.json())
