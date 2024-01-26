@@ -320,6 +320,6 @@ function displayParkingStatus(availableSpaces, totalSpaces) {
       parkingStatusElement.innerHTML = "Parking pełny";
 }
 setInterval(() => {
-  refreshData;
+  refreshData();
   //console.log('Wywołanie funkcji co 5 sekund');
 }, 1000);

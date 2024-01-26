@@ -12,8 +12,7 @@ body{
     color: #e65025!important;
 }
 .navbar-toggler {
-    background-color: #e65025!important;
-    border: 1px solid #e65025!important;
+    background-color: #e65025;
 }
 .parking-space {
     color: white;
@@ -69,6 +68,35 @@ body{
 .border-decoration{
     border: 2px solid #e65025;
 }
+.modal-decoration{
+    color: #e65025!important;
+    font-family: Roboto;
+    background-color: #000000;
+    border: 2px solid #e65025;
+}
+.modal-text{
+    color: white;
+    border: 2px solid white;
+    background: #000000;
+}
+.modal-text:focus{
+    color: white;
+    border: 2px solid #e65025;
+    background: #000000;
+}
+.modal-footer-decoration{
+    border-top: var(--bs-modal-footer-border-width) solid #e65025;
+}
+.button-decoration{
+    background-color: #e65025;
+    border: #e65025;
+    color: white;
+}
+.button-decoration:focus,.button-decoration:active,.button-decoration:hover,.button-decoration:checked{
+    background-color: #fd3700;
+    border: #fd3700;
+    color: white;
+}
 @font-face {
     font-family: 'Roboto';
     src: url('../RESOURCES/FONT/Roboto-Regular.ttf') format('truetype');
@@ -76,4 +104,14 @@ body{
 @font-face {
     font-family: 'DISPLAY';
     src: url('../RESOURCES/FONT/Open 24 Display St.ttf') format('truetype');
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }

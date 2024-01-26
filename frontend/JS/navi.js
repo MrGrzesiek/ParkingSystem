@@ -88,7 +88,7 @@ async function createNavi() {
     return div;
   }
 
-function createModal() {
+  function createModal() {
     return new Promise((resolve, reject) => {
         fetch(apiBaseUrl + "/rates/all")
             .then(response => response.json())
@@ -101,6 +101,7 @@ function createModal() {
                 modalDialog.classList.add('modal-dialog');
 
                 const modalContent = document.createElement('div');
+                modalContent.classList.add('modal-decoration');
                 modalContent.classList.add('modal-content');
 
                 const modalBody = document.createElement('div');
@@ -115,32 +116,37 @@ function createModal() {
                     div.classList.add('input-group', 'mb-2');
 
                     const span = document.createElement('span');
-                    span.classList.add('input-group-text');
+                    span.classList.add('input-group-text','modal-decoration');
                     span.textContent = field.label;
 
                     const input = document.createElement('input');
-                    input.type = 'text';
+                    input.type = 'number';
                     input.value = field.defaultValue; // Set the default value
-                    input.classList.add('form-control');
-
+                    input.classList.add('form-control','modal-text');
 
                     div.append(span, input);
                     modalBody.appendChild(div);
                 });
 
                 const modalFooter = document.createElement('div');
-                modalFooter.classList.add('modal-footer');
+                modalFooter.classList.add('modal-footer','modal-footer-decoration');
+
+                // Dodaj pole modalerror
+                const modalError = document.createElement('div');
+                modalError.id = 'modalerror'; // Dodaj id modalerror
+                modalError.textContent = ''; // Ustaw puste początkowe wartości
+                modalFooter.appendChild(modalError);
 
                 const cancelButton = document.createElement('button');
                 cancelButton.type = 'button';
                 cancelButton.classList.add('btn', 'btn-secondary');
                 cancelButton.setAttribute('data-bs-dismiss', 'modal');
-                cancelButton.textContent = 'Cancel';
+                cancelButton.textContent = 'Anuluj';
 
                 const submitButton = document.createElement('button');
                 submitButton.type = 'button';
-                submitButton.classList.add('btn', 'btn-primary');
-                submitButton.textContent = 'Submit';
+                submitButton.classList.add('btn','button-decoration');
+                submitButton.textContent = 'Zmień';
                 submitButton.addEventListener('click', function() {
                     const inputElements = document.querySelectorAll('.input-group input');
                     const hourly_rate = inputElements[0].value;
@@ -153,10 +159,16 @@ function createModal() {
                         .then(response => response.json())
                         .then(data => {
                             console.log(data);
+                            modalError.textContent = 'Stawki zostały zmienione.';
                         })
                         .catch(error => {
+                            // Ustaw tekst błędu w polu modalerror
+                            modalError.textContent = 'Wystąpił błąd podczas aktualizacji stawek.';
                             console.error('Error:', error);
                         });
+                });
+                modal.addEventListener('hidden.bs.modal', function () {
+                  modalError.textContent = '';
                 });
 
                 modalFooter.append(cancelButton, submitButton);
