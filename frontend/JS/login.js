@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var emailValue = document.getElementById('email').value;
         var passwordValue = document.getElementById('password').value;
         const hashedValue = sha256(passwordValue);
+        console.log(hashedValue);
 
         var isValid = true;
 
@@ -35,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const url = apiBaseUrl + "/user/login/" + emailValue + "/" + hashedValue;
             //fetch(apiBaseUrl + "/user/login/" + {emailValue}+"/"+{hashedValue})
             fetch(url, {
-                method: 'GET'
+                method: 'POST'
               })
             .then(response => {
                 if (!response.ok) {
@@ -44,22 +45,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 return response.json();
             })
             .then(data => {
-                // Handle successful login
-                // Assuming 'data' contains a token or user identifier
                 console.log("RESPONSE: ",data)
-                //saveAuthDataToLocalStorage(data);
+                // save login and id to local storage
+                localStorage.setItem('login', emailValue);
+                localStorage.setItem('id', data["id"]);
     
-                //window.location.href = 'index.html'; // Redirect to index.html
-                // TODO: Handle any additional tasks after successful login, e.g., redirecting the user or showing a welcome message
+                window.location.href = 'admin_panel.html'; // Redirect to index.html
             })
             .catch(error => {
                 // Handle login errors
                 // For demonstration purposes, we'll just show an alert
                 alert('Login failed: ' + error.message);
-    
-                // TODO: Handle any additional tasks after failed login, e.g., showing a specific error message to the user
             });
-            //window.location.href = targetPage;
         }
     });
 

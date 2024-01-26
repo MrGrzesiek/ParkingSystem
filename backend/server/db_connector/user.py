@@ -44,16 +44,15 @@ def register_user(user_model: SignUpRequestModel):
     return user[0]
 
 
-def signin_user(email, password):
+def signin_user(email, incoming_password_hash):
     user = __get_user_by_email__(email)
-    password_hash = ''
+    logger.info(f"Got user: {user}")
+    db_password_hash = user[0]['password_hash']
     if len(user) == 0:
         print('Invalid email')
         raise HTTPException(status_code=401, detail='Invalid email')
-    else:
-        password_hash = __get_user_password_hash__(email)
 
-    if (not auth_handler.verify_password(password, password_hash)):
+    if not incoming_password_hash == db_password_hash:
         print('Invalid password')
         raise HTTPException(status_code=401, detail='Invalid password')
     return user[0]
@@ -62,8 +61,8 @@ def __get_user_by_email__(email: str):
     user = query_get("""
         SELECT 
             users.id,
-            users.name,
-            users.email
+            users.email,
+            users.password_hash
         FROM users 
         WHERE email = %s
         """, (email))

@@ -75,8 +75,8 @@ def APICountFreeSpots():
 
 #user login
 @app.post("/user/login/{email}/{pwdHash}")
-def APILoginUser(email: str, pwd: str):
-    logger.log(signin_user(email, pwd))
+def APILoginUser(email: str, pwdHash: str):
+    return signin_user(email, pwdHash)
 
 #@app.post("/client/image")
 
