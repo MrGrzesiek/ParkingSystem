@@ -2,6 +2,7 @@ const apiBaseUrl = 'http://localhost:8000';
 const spotFree = 0;
 const spotTaken = 1;
 const maxHistoryRecords = 5;
+var currentNumber=1;
 document.addEventListener("DOMContentLoaded", async function() {
     await refreshParkingStatus();
 });
@@ -66,6 +67,7 @@ function generateParkingSpaces(states) {
 
         (function (parkingNumber) {
             parkingSpaceContent.onclick = function() {
+                currentNumber=parkingNumber;
                 displaySpotDetails(parkingNumber);
                 displaySpotHistory(parkingNumber);
             };
@@ -103,7 +105,7 @@ async function displaySpotHistory(parkingNumber) {
             for (var i = 0; i < historyRecords && i < maxHistoryRecords; i++) {
                 historyElement.innerHTML += "<h4> Nr. rej: " + data[i]["reg_number"] + "</h4> " +
                     "<h4> Czas wjazdu: " + data[i]["entry_time"].replace("T", "      ") + "</h4> " +
-                    "<h4> Czas wyjazdu: " + data[i]["departure_time"].replace("T", "      ") + "</h4> " + "<br>";
+                    "<h4> Czas wyjazdu: " + data[i]["departure_time"].replace("T", "      ") + "</h4> " + "<br><hr>";
             }
         } )
 }
@@ -155,5 +157,7 @@ async function renderParkingMap(){
 setInterval(() => {
     renderParkingMap();
     refreshParkingStatus();
+    displaySpotDetails(currentNumber);
+    displaySpotHistory(currentNumber);
     //console.log('Wywołanie funkcji co 5 sekund');
   }, 1000);

@@ -222,7 +222,7 @@ function createRecipe(numerRejestracyjny, czas,czas_wyjazdu, numerMiejsca,oplata
     <br>
     <h2>Naleznosc: ${oplata} PLN</h2>
     <br>
-    <p>DZIEKUJEMU ZA WIZYTE</p>
+    <p>DZIEKUJEMY ZA WIZYTE</p>
     <p>ZAPRASZAMY PONOWNIE<p>
   `;
 
