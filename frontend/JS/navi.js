@@ -59,14 +59,17 @@ async function createNavi() {
       const link = document.createElement('a');
       link.href = linkData.href;
       link.classList.add('nav-item', 'nav-link');
-  
+      if (linkData.text === 'Zmiana stawek') {
+          link.setAttribute('data-bs-toggle', 'modal');
+          link.setAttribute('data-bs-target', '#rateChangeModal');
+      }
+
       if (linkData.id === 'logoutBtn') {
         link.addEventListener('click', function() {
             localStorage.clear();
             window.location.href = 'index.html'; // Przejście do index.html po wylogowaniu
         });
-      }
-  
+      };
       const iconSpan = document.createElement('span');
       iconSpan.classList.add('bi', linkData.iconClass, 'icon-decoration');
   
@@ -84,15 +87,83 @@ async function createNavi() {
 
     return div;
   }
-  
+
+function createModal() {
+    return new Promise((resolve, reject) => {
+        fetch(apiBaseUrl + "/rates/all")
+            .then(response => response.json())
+            .then(data => {
+                const modal = document.createElement('div');
+                modal.classList.add('modal');
+                modal.id = 'rateChangeModal';
+
+                const modalDialog = document.createElement('div');
+                modalDialog.classList.add('modal-dialog');
+
+                const modalContent = document.createElement('div');
+                modalContent.classList.add('modal-content');
+
+                const modalBody = document.createElement('div');
+                modalBody.classList.add('modal-body');
+
+                const inputFields = [
+                    {label: 'Stawka godzinowa:         ', defaultValue: data.hourly_rate},
+                    {label: 'Darmowe minuty po wjeździe:', defaultValue: data.entry_grace_minutes},
+                    {label: 'Darmowe minuty do wyjazdu: ', defaultValue: data.exit_grace_minutes}];
+                inputFields.forEach(field => {
+                    const div = document.createElement('div');
+                    div.classList.add('input-group', 'mb-2');
+
+                    const span = document.createElement('span');
+                    span.classList.add('input-group-text');
+                    span.textContent = field.label;
+
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.value = field.defaultValue; // Set the default value
+                    input.classList.add('form-control');
+
+                    div.append(span, input);
+                    modalBody.appendChild(div);
+                });
+
+                const modalFooter = document.createElement('div');
+                modalFooter.classList.add('modal-footer');
+
+                const cancelButton = document.createElement('button');
+                cancelButton.type = 'button';
+                cancelButton.classList.add('btn', 'btn-secondary');
+                cancelButton.setAttribute('data-bs-dismiss', 'modal');
+                cancelButton.textContent = 'Cancel';
+
+                const submitButton = document.createElement('button');
+                submitButton.type = 'button';
+                submitButton.classList.add('btn', 'btn-primary');
+                submitButton.textContent = 'Submit';
+
+                modalFooter.append(cancelButton, submitButton);
+                modalContent.append(modalBody, modalFooter);
+                modalDialog.appendChild(modalContent);
+                modal.appendChild(modalDialog);
+
+                resolve(modal);
+            })
+            .catch(error => {
+                // Reject the promise if there is an error
+                reject(error);
+            });
+    });
+}
     
   document.addEventListener('DOMContentLoaded', async function() {
     const navElement = await createNavi(); // Oczekiwanie na zakończenie createNavi
-  
+    const modalElement = await createModal();
+
     const navColorMainDiv = document.querySelector('.nav-color-main');
   
     if (navColorMainDiv) {
-      navColorMainDiv.appendChild(navElement);
+        navColorMainDiv.appendChild(navElement);
+        navColorMainDiv.appendChild(modalElement);
     } else {
       console.error('Nie znaleziono elementu o klasie nav-color-main');
     }
