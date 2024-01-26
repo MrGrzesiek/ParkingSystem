@@ -63,7 +63,9 @@ def APIGetSpotHistory(placeID: str):
 def APIGetRates():
     return get_rates()
 
-#@app.get("/rates/forClient")
+@app.get("/rates/{registration}")
+def APIGetRatesClient(registration: str):
+    return get_rates_for_client(registration)
 
 #@app.get("/client/image")
 

@@ -42,6 +42,11 @@ def update_rates(hourly_rate, entry_grace_minutes, exit_grace_minutes):
 def get_rates_for_client(reg_number):
     spot = get_spot_by_reg_number(reg_number)
     minutes = __get_minutes_for_client(spot)
+    rates = get_rates
+    if minutes < rates["entry_grace_minutes"]:
+        return 0
+    else: 
+        return (minutes/60) * rates["hourly_rate"]
 
 def __get_minutes_for_client(spot):
     if spot is None:
