@@ -82,4 +82,5 @@ document.addEventListener('DOMContentLoaded', function () {
             feedbackElement.textContent = '';
         });
     }
+    
 });

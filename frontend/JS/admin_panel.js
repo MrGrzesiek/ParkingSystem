@@ -4,7 +4,10 @@ const spotTaken = 1;
 const maxHistoryRecords = 5;
 var currentNumber=1;
 document.addEventListener("DOMContentLoaded", async function() {
-    await refreshParkingStatus();
+    renderParkingMap();
+    refreshParkingStatus();
+    displaySpotDetails(currentNumber);
+    displaySpotHistory(currentNumber);
 });
 
 async function refreshParkingStatus() {
@@ -160,4 +163,4 @@ setInterval(() => {
     displaySpotDetails(currentNumber);
     displaySpotHistory(currentNumber);
     //console.log('Wywołanie funkcji co 5 sekund');
-  }, 1000);
+  }, 10000);
