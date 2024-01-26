@@ -115,6 +115,8 @@ function displaySpotDetails(parkingNumber) {
         .then(response => response.json())
         .then(data => {
             console.log(data);
+            photoName = data["photo_name"];
+            console.log(photoName);
             currentStatusElement.innerHTML = "<h4>Miejsce " + parkingNumber + "</h4>"
                                             + "<h4>Stan: " + (data["status"] == spotFree ? "Wolne" : "Zajęte") + "</h4>"
                                             + "<h4>Nr. rej: " + data["reg_number"] + "</h4>"

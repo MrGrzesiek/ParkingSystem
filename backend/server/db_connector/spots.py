@@ -191,7 +191,9 @@ def __is_spot_taken(spot_id) -> bool:
 
 def __get_spot_by_id(spot_id):
     spot = query_get("""
-                    SELECT * FROM spot WHERE id = %s;
+                    SELECT spot.*, entry.photo_name FROM spot
+                    LEFT JOIN entry ON spot.reg_number = entry.reg_number
+                    WHERE spot.id = %s;
                     """,
                      (
                          spot_id
