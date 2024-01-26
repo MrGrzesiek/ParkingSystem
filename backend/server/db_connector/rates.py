@@ -26,6 +26,19 @@ def get_rates():
     logger.debug(f"Got rates: {rates}")
     return rates[0]
 
+def update_rates(hourly_rate, entry_grace_minutes, exit_grace_minutes):
+    query_update("""
+                UPDATE parking_rates SET hourly_rate = %s, entry_grace_minutes = %s, exit_grace_minutes = %s;
+                """,
+                 (
+                     hourly_rate,
+                     entry_grace_minutes,
+                     exit_grace_minutes
+                 )
+                 )
+    logger.debug(f"Updated rates: hourly_rate: {hourly_rate}, entry_grace_minutes: {entry_grace_minutes}, exit_grace_minutes: {exit_grace_minutes}")
+    return {"status": "success", "message": "Rates updated successfully!"}
+
 def get_rates_for_client(reg_number):
     spot = get_spot_by_reg_number(reg_number)
     minutes = __get_minutes_for_client(spot)

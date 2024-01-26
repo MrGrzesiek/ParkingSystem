@@ -123,6 +123,7 @@ function createModal() {
                     input.value = field.defaultValue; // Set the default value
                     input.classList.add('form-control');
 
+
                     div.append(span, input);
                     modalBody.appendChild(div);
                 });
@@ -140,6 +141,23 @@ function createModal() {
                 submitButton.type = 'button';
                 submitButton.classList.add('btn', 'btn-primary');
                 submitButton.textContent = 'Submit';
+                submitButton.addEventListener('click', function() {
+                    const inputElements = document.querySelectorAll('.input-group input');
+                    const hourly_rate = inputElements[0].value;
+                    const entry_grace_minutes = inputElements[1].value;
+                    const exit_grace_minutes = inputElements[2].value;
+
+                    fetch(apiBaseUrl + `/rates/update/${hourly_rate}/${entry_grace_minutes}/${exit_grace_minutes}`, {
+                        method: 'POST'
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data);
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                });
 
                 modalFooter.append(cancelButton, submitButton);
                 modalContent.append(modalBody, modalFooter);

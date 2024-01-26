@@ -78,6 +78,10 @@ def APILoginUser(email: str, pwd: str):
 
 #@app.post("/client/image")
 
+@app.post("/rates/update/{hourly_rate}/{entry_grace_minutes}/{exit_grace_minutes}")
+def APIUpdateRates(hourly_rate: float, entry_grace_minutes: int, exit_grace_minutes: int):
+    return update_rates(hourly_rate, entry_grace_minutes, exit_grace_minutes)
+
 @app.post("/spot/free/{spotID}")
 def APIFreeSpot(spotID: str):
     free_spot(spotID)
