@@ -197,14 +197,27 @@ document.addEventListener("DOMContentLoaded", function () {
   var priceListElement = document.getElementById("price-list");
 
   // Wygeneruj HTML z danymi cennika
-  var html = "<ul>";
-  for (var i = 0; i < cennik.length; i++) {
-      html += "<li>" + cennik[i].rodzaj + ": " + cennik[i].cena + " PLN</li>";
-  }
-  html += "</ul>";
+
 
   // Wyświetl cennik w elemencie price-list
-  priceListElement.innerHTML = html;
+  fetch(apiBaseUrl + "/rates/all")
+    .then(response => response.json())
+    .then(data => {
+        console.log(data)
+      /* {
+    "hourly_rate": 2,
+    "entry_grace_minutes": 15,
+    "exit_grace_minutes": 15
+} */
+      var html = "<ul>";
+        html += "<li>" + "Stawka godzinowa: " + data.hourly_rate + " PLN</li><br>";
+        html += "<li>" + "Czas darmowy na wjeździe: " + data.entry_grace_minutes + " minut</li><br>";
+        html += "<li>" + "Czas darmowy na wyjeździe: " + data.exit_grace_minutes + " minut</li>";
+        html += "</ul>";
+        // make list elements vertical
+        priceListElement.innerHTML = html;
+
+    } )
 
   // Symulacja danych o miejscach parkingowych
   var liczbaMiejsc = 50;  // całkowita liczba miejsc na parkingu

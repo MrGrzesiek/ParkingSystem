@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 def get_rates():
     rates = query_get("""
-                    SELECT hour_rate, free_entry_minutes, exit_grace_peropd_minutes FROM rates;
+                    SELECT hourly_rate, entry_grace_minutes, exit_grace_minutes FROM parking_rates;
                     """,
                       (
                       )

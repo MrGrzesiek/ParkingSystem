@@ -1,9 +1,9 @@
 CREATE TABLE IF NOT EXISTS `parking_rates`
 (
  `id`                        int NOT NULL ,
- `hour_rate`                 decimal NOT NULL ,
- `free_entry_minutes`        int NOT NULL ,
- `exit_grace_period_minutes` int NOT NULL ,
+ `hourly_rate`                 decimal NOT NULL ,
+ `entry_grace_minutes`        int NOT NULL ,
+ `exit_grace_minutes` int NOT NULL ,
 
 PRIMARY KEY (`id`)
 );
@@ -78,7 +78,7 @@ INSERT INTO spot (id, status) VALUES (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6,
                                      (31, 0), (32, 0), (33, 0), (34, 0), (35, 0), (36, 0), (37, 0), (38, 0), (39, 0), (40, 0),
                                      (41, 0), (42, 0), (43, 0), (44, 0), (45, 0), (46, 0), (47, 0), (48, 0), (49, 0), (50, 0);
 
-INSERT INTO parking_rates (id, hour_rate, free_entry_minutes, exit_grace_period_minutes) VALUES (1, 1.5, 15, 15);
+INSERT INTO parking_rates (id, hourly_rate, entry_grace_minutes, exit_grace_minutes) VALUES (1, 1.5, 15, 15);
 
 INSERT INTO spot_history (id, entry_time, departure_time, reg_number, spot_id)
 VALUES
