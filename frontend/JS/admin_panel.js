@@ -27,10 +27,6 @@ async function refreshParkingStatus() {
         } )
 }
 
-function calculateParkingStatus(totalSpaces, occupiedSpaces) {
-    return totalSpaces - occupiedSpaces;
-}
-
 function displayParkingStatus(availableSpaces, totalSpaces) {
     var parkingStatusElement = document.getElementById("parking-status");
     if(availableSpaces>0)
