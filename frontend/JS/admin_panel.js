@@ -17,7 +17,7 @@ async function refreshParkingStatus() {
     fetch(apiBaseUrl + "/spot/number_of_free_out_of_all") // returns two numbers: number of free spots and number of all spots
         .then(response => response.json())
         .then(data => {
-            console.log(data)
+            //console.log(data)
             occupiedParkingSpaces = data[0][0]["COUNT(status)"];
             totalParkingSpaces = data[1][0]["COUNT(status)"];
             //console.log("occupiedParkingSpaces: " + occupiedParkingSpaces);
@@ -27,13 +27,12 @@ async function refreshParkingStatus() {
         } )
 }
 
-function calculateParkingStatus(totalSpaces, occupiedSpaces) {
-    return totalSpaces - occupiedSpaces;
-}
-
 function displayParkingStatus(availableSpaces, totalSpaces) {
     var parkingStatusElement = document.getElementById("parking-status");
-    parkingStatusElement.innerHTML = availableSpaces + " / " + totalSpaces;
+    if(availableSpaces>0)
+        parkingStatusElement.innerHTML = (50-availableSpaces) + " / " + totalSpaces;
+    else
+        parkingStatusElement.innerHTML = "Parking pełny";
 }
 
 function generateParkingSpaces(states) {
@@ -116,14 +115,21 @@ function displaySpotDetails(parkingNumber) {
         .then(data => {
             console.log(data);
             photoName = data["photo_name"];
-            console.log(photoName);
-            currentStatusElement.innerHTML = "<h4>Miejsce " + parkingNumber + "</h4>"
+            photoName = "../RESOURCES/CAR PHOTO/"+photoName;
+            console.log("ZDJECIE: ",photoName);
+            currentStatusElement.innerHTML ='<img src="' + photoName + '" style="max-width: 100%; height: auto; margin-bottom: 20px;" class="mb-4" alt="Car Photo">'+"<br>"
+                                            + "<h4>Miejsce " + parkingNumber + "</h4>"
                                             + "<h4>Stan: " + (data["status"] == spotFree ? "Wolne" : "Zajęte") + "</h4>"
                                             + "<h4>Nr. rej: " + data["reg_number"] + "</h4>"
                                             + "<h4>Czas wjazdu: " + data["entry_time"].replace("T", "      ") + "\n" + "</h4>";
         } )
-
-    var historyElement = document.getElementById("history");
+        .catch(error => {
+            photoName = "../RESOURCES/CAR PHOTO/"+"free.jpg";
+            currentStatusElement.innerHTML ='<img src="' + photoName + '" style="max-width: 100%; height: auto; margin-bottom: 20px;" class="mb-4" alt="Car Photo">'+"<br>"
+                                            + "<h4>Miejsce " + parkingNumber + "</h4>"
+                                            + "<h4>Stan: Wolne" + "</h4>";
+            console.error(error);
+          });
 }
 
 async function getParkingStatus(){
@@ -149,5 +155,5 @@ async function renderParkingMap(){
 setInterval(() => {
     renderParkingMap();
     refreshParkingStatus();
-    console.log('Wywołanie funkcji co 5 sekund');
+    //console.log('Wywołanie funkcji co 5 sekund');
   }, 1000);

@@ -185,52 +185,7 @@ function czyscPole() {
 }
 // Skrypt cennika parkingu
 document.addEventListener("DOMContentLoaded", function () {
-  // Dane cennika
-  var cennik = [
-      { rodzaj: "Wjazd", cena: 5 },
-      { rodzaj: "Pierwsza godzina parkowania", cena: 10 },
-      { rodzaj: "Każda kolejna godzina parkowania", cena: 7 },
-      { rodzaj: "Cała noc", cena: 50 },
-  ];
-
-  // Pobierz element, gdzie będziemy wyświetlać cennik
-  var priceListElement = document.getElementById("price-list");
-
-  // Wygeneruj HTML z danymi cennika
-
-
-  // Wyświetl cennik w elemencie price-list
-  fetch(apiBaseUrl + "/rates/all")
-    .then(response => response.json())
-    .then(data => {
-        console.log(data)
-      /* {
-    "hourly_rate": 2,
-    "entry_grace_minutes": 15,
-    "exit_grace_minutes": 15
-} */
-      var html = "<ul>";
-        html += "<li>" + "Stawka godzinowa: " + data.hourly_rate + " PLN</li><br>";
-        html += "<li>" + "Czas darmowy na wjeździe: " + data.entry_grace_minutes + " minut</li><br>";
-        html += "<li>" + "Czas darmowy na wyjeździe: " + data.exit_grace_minutes + " minut</li>";
-        html += "</ul>";
-        // make list elements vertical
-        priceListElement.innerHTML = html;
-
-    } )
-
-  // Symulacja danych o miejscach parkingowych
-  var liczbaMiejsc = 50;  // całkowita liczba miejsc na parkingu
-  var zajeteMiejsca = 20;  // liczba zajętych miejsc
-  
-  // Oblicz ilość wolnych miejsc
-  var wolneMiejsca = liczbaMiejsc - zajeteMiejsca;
-  
-  // Pobierz element, gdzie będziemy wyświetlać informacje o miejscach parkingowych
-  var parkingStateElement = document.getElementById("parkin-state");
-  
-  // Wyświetl ilość wolnych miejsc
-  parkingStateElement.textContent = "Stan parkingu: Wolne miejsca: " + wolneMiejsca;
+refreshData();
 });
 function obliczCzasPostoju(czasUnix) {
   const teraz = new Date();
@@ -318,3 +273,53 @@ function formatDate(date) {
 
   return `${year}/${month}/${day} ${hours}:${minutes}`;
 }
+
+function refreshData(){
+  getPrice();
+  getParkingStatus();
+}
+function getParkingStatus(){
+  fetch(apiBaseUrl + "/spot/number_of_free_out_of_all") // returns two numbers: number of free spots and number of all spots
+  .then(response => response.json())
+  .then(data => {
+      //console.log(data)
+      occupiedParkingSpaces = data[0][0]["COUNT(status)"];
+      totalParkingSpaces = data[1][0]["COUNT(status)"];
+      //console.log("occupiedParkingSpaces: " + occupiedParkingSpaces);
+      //console.log("totalParkingSpaces: " + totalParkingSpaces);
+      // Wyświetlanie stanu parkingu
+      displayParkingStatus(occupiedParkingSpaces, totalParkingSpaces);
+  } )
+}
+function getPrice(){
+  var priceElement = document.getElementById("price-list");
+  fetch(apiBaseUrl + "/rates/all")
+  .then(response => response.json())
+  .then(data => {
+      console.log(data)
+    /* {
+  "hourly_rate": 2,
+  "entry_grace_minutes": 15,
+  "exit_grace_minutes": 15
+} */
+    var html = "<ul>";
+      html += "<li>" + "Stawka godzinowa: " + data.hourly_rate + " PLN</li><br>";
+      html += "<li>" + "Czas darmowy na wjeździe: " + data.entry_grace_minutes + " minut</li><br>";
+      html += "<li>" + "Czas darmowy na wyjeździe: " + data.exit_grace_minutes + " minut</li>";
+      html += "</ul>";
+      // make list elements vertical
+      priceElement.innerHTML = html;
+
+  } )
+}
+function displayParkingStatus(availableSpaces, totalSpaces) {
+  var parkingStatusElement = document.getElementById("parkin-state");
+  if(availableSpaces>0)
+      parkingStatusElement.innerHTML = "Stan parkingu: "+(50-availableSpaces) + " / " + totalSpaces;
+  else
+      parkingStatusElement.innerHTML = "Parking pełny";
+}
+setInterval(() => {
+  refreshData;
+  //console.log('Wywołanie funkcji co 5 sekund');
+}, 1000);
