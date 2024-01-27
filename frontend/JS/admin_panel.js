@@ -119,16 +119,19 @@ function displaySpotDetails(parkingNumber) {
     var currentStatusElement = document.getElementById("currentStatus");
     fetch(apiBaseUrl + "/spot/info/" + parkingNumber)
         .then(response => response.json())
-        .then(data => {
+        .then(async (data) => {
             console.log(data);
             photoName = data["photo_name"];
             photoName = "../RESOURCES/CAR PHOTO/"+photoName;
             console.log("ZDJECIE: ",photoName);
+            var cash = await getCash(data["reg_number"]);
+            cash = cash.toFixed(2);
             currentStatusElement.innerHTML ='<img src="' + photoName + '" style="max-width: 100%; height: auto; margin-bottom: 20px;" class="mb-4" alt="Car Photo">'+"<br>"
                                             + "<h4>Miejsce " + parkingNumber + "</h4>"
                                             + "<h4>Stan: " + (data["status"] == spotFree ? "Wolne" : "Zajęte") + "</h4>"
                                             + "<h4>Nr. rej: " + data["reg_number"] + "</h4>"
-                                            + "<h4>Czas wjazdu: " + data["entry_time"].replace("T", "      ") + "\n" + "</h4>";
+                                            + "<h4>Czas wjazdu: " + data["entry_time"].replace("T", "      ") + "\n" + "</h4>"
+                                            + "<h4>Aktualna opłata " + cash + "Zł</h4>";
         } )
         .catch(error => {
             photoName = "../RESOURCES/CAR PHOTO/"+"free.jpg";
@@ -167,3 +170,13 @@ setInterval(() => {
     //console.log('Wywołanie funkcji co 5 sekund');
   }, 10000);
 }
+async function getCash(regnumber) {
+    try {
+      const response = await fetch(apiBaseUrl + "/rates/" + regnumber);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Wystąpił błąd:", error);
+      return null;
+    }
+  }

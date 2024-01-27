@@ -1,3 +1,5 @@
+const apiBaseUrl = 'http://localhost:8000';
+
 async function main() {
   function getParameterByName(name, url) {
     if (!url) url = window.location.href;
@@ -27,11 +29,23 @@ async function main() {
 
   var czasPostojuElement = document.createElement("p");
   czasPostojuElement.textContent = "Czas postoju: " + czasPostoju.godziny + " godzin i " + czasPostoju.minuty + " minut";
+  
+  var cash;
+  cash = await getCash(numerRejestracyjny);
+  
+  var cashElement = document.createElement("p");
+  var textElement = document.createElement("span");
 
+  textElement.textContent = "Należność ";
+  cashElement.textContent = cash.toFixed(2) + " Zł";
+
+  cashElement.style.color = "white";
   // Dodaj elementy do dokumentu
   dataContainer.appendChild(numerRejestracyjnyElement);
   dataContainer.appendChild(czasWjazduElement);
   dataContainer.appendChild(czasPostojuElement);
+  dataContainer.appendChild(textElement);
+  dataContainer.appendChild(cashElement);
 }
 
 // Wywołaj funkcję główną
@@ -44,4 +58,15 @@ function obliczCzasPostoju(czasUnix) {
   const minuty = czasPostojuMinuty % 60;
 
   return { godziny, minuty };
+}
+async function getCash(regnumber) {
+  try {
+    const response = await fetch(apiBaseUrl + "/rates/" + regnumber);
+    const data = await response.json();
+    console.log("cash: ", data);
+    return data;
+  } catch (error) {
+    console.error("Wystąpił błąd:", error);
+    return null;
+  }
 }
