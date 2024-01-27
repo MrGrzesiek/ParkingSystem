@@ -187,7 +187,12 @@ function przyciskEnter() {
               }
             } )
 
-        });
+        })
+        .catch(error => {
+            generateError(errorElement,"Auto o takim numerze nie jest na parkingu.")
+            console.error(error);
+
+      });
       break;
       default: 
         errorElement.textContent = "Wybierz rodzaj operacji.";
