@@ -170,7 +170,7 @@ function przyciskEnter() {
             .then(data_rates => {
               console.log("/spot/info/registration/: " + JSON.stringify(data_info));
                 console.log("/rates/: " + JSON.stringify(data_rates));
-              czas_wjazdu = 1706017455;
+              czas_wjazdu = convertDateToUnixTimestamp(data_info["entry_time"]);
               var numerMiejsca = data_info["id"];
               var czas_wyjazdu = new Date();
               oplata = data_rates;
@@ -193,6 +193,12 @@ function przyciskEnter() {
         errorElement.textContent = "Wybierz rodzaj operacji.";
   }
 
+}
+
+function convertDateToUnixTimestamp(dateStr) {
+  var dateObj = new Date(dateStr);
+  var timestamp = Math.floor(dateObj.getTime() / 1000);
+  return timestamp;
 }
 
 // Funkcja do czyszczenia pola tekstowego
