@@ -92,7 +92,7 @@ function createTicket(numerRejestracyjny, czas, numerMiejsca, zdjecie) {
 function generateLink(numerRejestracyjny, czas) {
   // Tutaj możesz dostosować format linku zgodnie z własnymi preferencjami
   console.log("link dziala");
-  return "http://localhost:7999/HTML/howmuchcash.html?nr_rej=" + numerRejestracyjny + "&czas=" + czas;
+  return "http://localhost:7999/HTML/howmuchcash.html?nr_rej=" + numerRejestracyjny + "&czas_wjazdu=" + czas;
 }
 
 // Funkcja do obsługi przycisku "Enter"
@@ -131,9 +131,6 @@ function przyciskEnter() {
   
           var currentDate = new Date();
           console.log("Aktualna data i godzina: " + currentDate.toLocaleString());
-  
-          // Losuj numer miejsca parkingowego
-          var numerMiejsca = Math.floor(Math.random() * liczbaMiejsc) + 1;
           
           // Losuj zdjęcie
           losujZdjecie().then(function (zdjecie) {
@@ -142,6 +139,7 @@ function przyciskEnter() {
             var id = result[0];
             var entryTime = result[1][0].entry_time;
             console.log("ID:", id);
+
             console.log(typeof(id));
             console.log("Entry Time:", entryTime.toLocaleString());
             console.log(typeof(entryTime));
@@ -164,16 +162,32 @@ function przyciskEnter() {
       }
       break;
     case "out":
-      czas=1706017455;
-      var czas_wyjazdu = new Date();
-      oplata=10;
-      if (numerRejestracyjny === "" || typeof rodzajOperacji === "undefined") {
-        errorElement.textContent = "Wprowadź numer rejestracyjny.";
-      } else {
-        const czasPostoju = obliczCzasPostoju(1706017455);
-        console.log(`Czas postoju: ${czasPostoju.godziny} godzin i ${czasPostoju.minuty} minut`);
-        createRecipe(numerRejestracyjny, czas,czas_wyjazdu, numerMiejsca,oplata)
-      }
+      fetch(apiBaseUrl + "/spot/info/registration/" + numerRejestracyjny)
+      .then(response => response.json())
+        .then(data_info => {
+          fetch(apiBaseUrl + "/rates/" + numerRejestracyjny)
+            .then(response => response.json())
+            .then(data_rates => {
+              console.log("/spot/info/registration/: " + JSON.stringify(data_info));
+                console.log("/rates/: " + JSON.stringify(data_rates));
+              czas_wjazdu = 1706017455;
+              var numerMiejsca = data_info["id"];
+              var czas_wyjazdu = new Date();
+              oplata = data_rates;
+              console.log("Numer miejsca: " + numerMiejsca);
+                console.log("Czas wjazdu: " + czas_wjazdu.toLocaleString());
+                console.log("Czas wyjazdu: " + czas_wyjazdu.toLocaleString());
+                console.log("Opłata: " + oplata);
+              if (numerRejestracyjny === "" || typeof rodzajOperacji === "undefined") {
+                errorElement.textContent = "Wprowadź numer rejestracyjny.";
+              } else {
+                const czasPostoju = obliczCzasPostoju(1706017455);
+                console.log(`Czas postoju: ${czasPostoju.godziny} godzin i ${czasPostoju.minuty} minut`);
+                createRecipe(numerRejestracyjny, czas_wjazdu, czas_wyjazdu, numerMiejsca, oplata)
+              }
+            } )
+
+        });
       break;
       default: 
         errorElement.textContent = "Wybierz rodzaj operacji.";
@@ -198,7 +212,7 @@ function obliczCzasPostoju(czasUnix) {
 
   return { godziny, minuty };
 }
-function createRecipe(numerRejestracyjny, czas,czas_wyjazdu, numerMiejsca,oplata) {
+function createRecipe(numerRejestracyjny, czas_wjazdu, czas_wyjazdu, numerMiejsca, oplata) {
   // Utwórz nowe okno przeglądarki
   var newPage = window.open("", "_blank");
 
@@ -209,6 +223,9 @@ function createRecipe(numerRejestracyjny, czas,czas_wyjazdu, numerMiejsca,oplata
   content.style.maxWidth = "500px"; // Ogranicz szerokość zawartości
   content.style.border = "2px solid grey";
   content.style.padding = "20px";
+  console.log("Czas wjazdu inoutform:" + new Date(czas_wjazdu * 1000).toLocaleString());
+  // oplata needs to have maximally two decimal places
+    oplata = oplata.toFixed(2);
 
   content.innerHTML = `
     <head>
@@ -218,7 +235,7 @@ function createRecipe(numerRejestracyjny, czas,czas_wyjazdu, numerMiejsca,oplata
     <h1 class="mb-4">SMART PARK</h2>
     <h2 class="mb-4">Rachunek</h2>
     <p>Numer rejestracyjny: ${numerRejestracyjny}</p>
-    <p>Czas wjazdu: ${new Date(czas * 1000).toLocaleString()}</p>
+    <p>Czas wjazdu: ${new Date(czas_wjazdu * 1000).toLocaleString()}</p>
     <p>Czas wyjazdu: ${czas_wyjazdu.toLocaleString()}</p>
     <p>Numer miejsca: ${numerMiejsca}</p>
     <br>
@@ -249,6 +266,18 @@ function createRecipe(numerRejestracyjny, czas,czas_wyjazdu, numerMiejsca,oplata
 
   // Dodaj zawartość do nowej strony
   newPage.document.body.appendChild(content);
+  fetch(apiBaseUrl + "/spot/free/" + numerMiejsca, {
+    method: 'POST'
+  })
+    .then(response => {
+        if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("Freed spot response: " + data);
+    });
 }
 async function sendCarToParking(regNumber, photo) {
   try {

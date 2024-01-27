@@ -188,6 +188,18 @@ def __is_spot_taken(spot_id) -> bool:
     logger.debug(f"Got spot status: {spot[0]['status']} for spot {spot_id}")
     return int(spot[0]['status']) == SPOT_TAKEN
 
+def get_spot_info_by_registration (registration):
+    spot = query_get("""
+                    SELECT spot.*, entry.photo_name FROM spot
+                    LEFT JOIN entry ON spot.reg_number = entry.reg_number
+                    WHERE spot.reg_number = %s;
+                    """,
+                     (
+                         registration
+                     )
+                     )
+    logger.debug(f"Got spot: {spot[0]} for registration {registration}")
+    return spot[0]
 
 def __get_spot_by_id(spot_id):
     spot = query_get("""

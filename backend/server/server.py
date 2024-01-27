@@ -54,6 +54,11 @@ def APIreserveSpot(registration: str, photo_name: str):
 def APIGetSpotInfo(spotID: str):
     return get_spot_info(spotID)
 
+#info about spot by registration number
+@app.get("/spot/info/registration/{registration}")
+def APIGetSpotInfoByRegistration(registration: str):
+    return get_spot_info_by_registration(registration)
+
 #spot history by id
 @app.get("/spot/history/{placeID}")
 def APIGetSpotHistory(placeID: str):

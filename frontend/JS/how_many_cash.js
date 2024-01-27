@@ -14,9 +14,9 @@ async function main() {
   var dataContainer = document.getElementById("data");
   // Odczytaj parametry z adresu URL
   var numerRejestracyjny = getParameterByName('nr_rej');
-  var czasWjazdu = parseInt(getParameterByName('czas')); // Parsuj czas jako liczbę całkowitą
+  var czasWjazdu = parseInt(getParameterByName('czas')); // Parsuj czas_wjazdu jako liczbę całkowitą
 
-  // Oblicz czas postoju
+  // Oblicz czas_wjazdu postoju
   var czasPostoju = await obliczCzasPostoju(czasWjazdu);
 
   // Utwórz elementy HTML dynamicznie
@@ -46,6 +46,19 @@ async function main() {
   dataContainer.appendChild(czasPostojuElement);
   dataContainer.appendChild(textElement);
   dataContainer.appendChild(cashElement);
+//@app.post("/spot/free/{spotID}")
+  fetch(apiBaseUrl + "/spot/free/" + getParameterByName('id'), {
+    method: 'POST'
+  })
+    .then(response => {
+        if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("Freed spot response: " + data);
+    });
 }
 
 // Wywołaj funkcję główną

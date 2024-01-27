@@ -14,7 +14,7 @@ function aktualizujCzas() {
     divCzas.textContent = czasTekst;
   }
 
-  // Wywołaj funkcję aktualizującą czas co sekundę
+  // Wywołaj funkcję aktualizującą czas_wjazdu co sekundę
   setInterval(aktualizujCzas, 1000);
 
   // Inicjalne ustawienie czasu
