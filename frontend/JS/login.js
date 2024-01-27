@@ -2,8 +2,9 @@ const apiBaseUrl = 'http://localhost:8000';
 
 document.addEventListener('DOMContentLoaded', function () {
     var loginForm = document.getElementById('loginForm');
-    var correctPassword = '123456'; // Zmień na rzeczywiste poprawne hasło
-    var targetPage = '../HTML/admin_panel.html';
+
+    var errorElement = document.getElementById('errormessage');
+
 
     loginForm.addEventListener('submit', function (event) {
         event.preventDefault();
@@ -12,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var emailValue = document.getElementById('email').value;
         var passwordValue = document.getElementById('password').value;
         const hashedValue = sha256(passwordValue);
-        console.log(hashedValue);
+        
 
         var isValid = true;
 
@@ -49,13 +50,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 // save login and id to local storage
                 localStorage.setItem('login', emailValue);
                 localStorage.setItem('id', data["id"]);
-    
+                errorElement.textContent = "";
                 window.location.href = 'admin_panel.html'; // Redirect to index.html
             })
             .catch(error => {
                 // Handle login errors
                 // For demonstration purposes, we'll just show an alert
-                alert('Login failed: ' + error.message);
+                console.log('Login failed: ' + error.message);
+                errorElement.textContent = "Auroryzacja nie udana";
             });
         }
     });

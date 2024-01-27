@@ -3,6 +3,8 @@ const spotFree = 0;
 const spotTaken = 1;
 const maxHistoryRecords = 5;
 var currentNumber=1;
+const userLoggedIn = localStorage.getItem('login');
+if(userLoggedIn){
 document.addEventListener("DOMContentLoaded", async function() {
     renderParkingMap();
     refreshParkingStatus();
@@ -164,3 +166,4 @@ setInterval(() => {
     displaySpotHistory(currentNumber);
     //console.log('Wywołanie funkcji co 5 sekund');
   }, 10000);
+}

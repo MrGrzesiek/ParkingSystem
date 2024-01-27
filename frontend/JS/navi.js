@@ -1,8 +1,7 @@
 const api = 'http://localhost:8000';
 async function createNavi() {
 
-    const userLoggedIn = localStorage.getItem('user');
-    const feedback = localStorage.getItem('feedback');
+    const userLoggedIn = localStorage.getItem('login');
     
     const div = document.createElement('div');
     div.classList.add('nav-color-main');
@@ -46,14 +45,14 @@ async function createNavi() {
   
     const links = [];
   
-    if (true) {
+    if (userLoggedIn) {
       links.push(
         { href: '../HTML/chart.html', text: 'Wykres popularności', iconClass: 'bi-bar-chart-line-fill' },
         { href: '#', text: 'Zmiana stawek', iconClass: 'bi-currency-exchange' },
         { href: '../HTML/admin_log_panel.html', text: 'Wyloguj', iconClass: 'bi-box-arrow-in-left', id: 'logoutBtn' }
       );
     } else {
-      links.push({ href: 'login.html', text: 'Zaloguj', iconClass: 'bi-box-arrow-in-left' });
+      links.push({ href: '../HTML/admin_log_panel.html', text: 'Zaloguj', iconClass: 'bi-box-arrow-in-left' });
     }
   
     links.forEach(linkData => {
