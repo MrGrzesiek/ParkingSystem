@@ -100,8 +100,6 @@ def reserve_spot(reg_number, photo_name):
                                  reg_number
                             )
                             )
-    logger.debug(f"Got entry time: {entry_time}")
-    logger.debug(f'Reserved spot {spot} for {reg_number}')
     return spot, entry_time
 
 def __is_reg_number_in_use(reg_number) -> bool:
@@ -121,7 +119,6 @@ def __is_reg_number_in_use(reg_number) -> bool:
                          reg_number
                      )
                      )
-    logger.info(f"Got spot status: {spot} for reg_number {reg_number}")
     if len(spot) == 0:
         return False
     return int(spot[0]['status']) == SPOT_TAKEN
@@ -139,7 +136,6 @@ def get_all_spots():
                       (
                       )
                       )
-    logger.debug(f"Got all spots: {spots}")
     return spots
 
 
@@ -154,7 +150,6 @@ def get_spot_info(spot_id):
     Dict: A dictionary containing information about the parking spot.
     """
     spot = __get_spot_by_id(spot_id)
-    logger.debug(f"Got spot: {spot}")
     return spot
 
 
@@ -176,7 +171,6 @@ def get_spot_history(spot_id):
                             spot_id
                         )
                         )
-    logger.debug(f"Got spot history: {history}")
     return history
 
 
@@ -221,7 +215,6 @@ def free_spot(spot_id):
                      spot_id,
                  )
                  )
-    logger.info(f"Freed spot {spot_id}")
     return None
 
 
@@ -246,7 +239,6 @@ def get_number_of_free_spots_out_of_all():
                         (
                         )
                         )
-    logger.info(f"Free spots: {free_spots} / {all_spots}")
     return free_spots, all_spots
 def get_spot_by_reg_number(reg_number):
     """
@@ -264,7 +256,6 @@ def get_spot_by_reg_number(reg_number):
                          reg_number
                      )
                      )
-    logger.debug(f"Got spot: {spot}")
     return spot[0]
 
 
@@ -286,7 +277,6 @@ def __get_free_spot_id():
     if len(spot_id) == 0:
         logger.debug(f"No free spots")
         return None
-    logger.debug(f"Got free spot id: {spot_id[0]['id']}")
     return int(spot_id[0]["id"])
 
 
@@ -307,7 +297,6 @@ def __is_spot_taken(spot_id) -> bool:
                          spot_id
                      )
                      )
-    logger.debug(f"Got spot status: {spot[0]['status']} for spot {spot_id}")
     return int(spot[0]['status']) == SPOT_TAKEN
 
 def get_spot_info_by_registration (registration):
@@ -329,7 +318,6 @@ def get_spot_info_by_registration (registration):
                          registration
                      )
                      )
-    logger.debug(f"Got spot: {spot[0]} for registration {registration}")
     return spot[0]
 
 def __get_spot_by_id(spot_id):
@@ -351,7 +339,6 @@ def __get_spot_by_id(spot_id):
                          spot_id
                      )
                      )
-    logger.debug(f"Got spot: {spot[0]} for spot {spot_id}")
     return spot[0]
 
 
@@ -368,6 +355,5 @@ def get_free_spots_count():
                       (
                       )
                       )
-    logger.debug(f"Free spots: {count}")
     return count
 

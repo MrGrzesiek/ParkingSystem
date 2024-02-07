@@ -1,5 +1,9 @@
 const apiBaseUrl = 'http://localhost:8000';
 
+/**
+ * Pobiera nazwy zdjęć z pliku JSON.
+ * @returns {Promise<Array<string>>} Obiekt Promise z tablicą nazw zdjęć.
+ */
 async function pobierzNazwyZdjec() {
   try {
     const response = await fetch('../JSON/zdjecia.json');
@@ -11,6 +15,10 @@ async function pobierzNazwyZdjec() {
   }
 }
 
+/**
+ * Losuje zdjęcie z pobranych danych.
+ * @returns {Promise<string>} Obiekt Promise z nazwą losowego zdjęcia.
+ */
 async function losujZdjecie() {
   try {
     const zdjecia = await pobierzNazwyZdjec();
@@ -23,6 +31,13 @@ async function losujZdjecie() {
   }
 }
 
+/**
+ * Tworzy bilet parkingowy.
+ * @param {string} numerRejestracyjny - Numer rejestracyjny pojazdu.
+ * @param {Date} czas - Data i czas wjazdu.
+ * @param {number} numerMiejsca - Numer miejsca parkingowego.
+ * @param {string} zdjecie - Nazwa pliku zdjęcia samochodu.
+ */
 function createTicket(numerRejestracyjny, czas, numerMiejsca, zdjecie) {
 
   var newPage = window.open("", "_blank");
@@ -88,14 +103,22 @@ function createTicket(numerRejestracyjny, czas, numerMiejsca, zdjecie) {
   // Dodaj zawartość do nowej strony
   newPage.document.body.appendChild(content);
 }
-// Funkcja do generowania linku
+
+/**
+ * Generuje link do strony z aktualną opłatą na podstawie numeru rejestracyjnego i czasu wjazdu.
+ * @param {string} numerRejestracyjny - Numer rejestracyjny pojazdu.
+ * @param {number} czas - Czas w formacie UNIX.
+ * @returns {string} Link do strony z aktualną opłatą.
+ */
 function generateLink(numerRejestracyjny, czas) {
   // Tutaj możesz dostosować format linku zgodnie z własnymi preferencjami
   console.log("link dziala");
   return "http://localhost:7999/HTML/howmuchcash.html?nr_rej=" + numerRejestracyjny + "&czas_wjazdu=" + czas;
 }
 
-// Funkcja do obsługi przycisku "Enter"
+/**
+ * Obsługuje wciśnięcie przycisku "Enter".
+ */
 function przyciskEnter() {
   var numerRejestracyjny = document.getElementById("tekstowe-pole").value;
   var rodzajOperacji;
@@ -200,20 +223,41 @@ function przyciskEnter() {
 
 }
 
+/**
+ * Konwertuje datę w formacie tekstowym na znacznik czasu UNIX.
+ * @param {string} dateStr - Data w formacie tekstowym.
+ * @returns {number} Znacznik czasu UNIX.
+ */
 function convertDateToUnixTimestamp(dateStr) {
   var dateObj = new Date(dateStr);
   var timestamp = Math.floor(dateObj.getTime() / 1000);
   return timestamp;
 }
 
-// Funkcja do czyszczenia pola tekstowego
+/**
+ * Czyści pole tekstowe.
+ */
 function czyscPole() {
   document.getElementById("tekstowe-pole").value = "";
 }
-// Skrypt cennika parkingu
+
+/**
+ * Oblicza czas postoju na podstawie czasu wjazdu.
+ * @param {number} czasUnix - Czas wjazdu w formacie UNIX.
+ * @returns {{godziny: number, minuty: number}} Obiekt zawierający ilość godzin i minut postoju.
+ */
 document.addEventListener("DOMContentLoaded", function () {
 refreshData();
 });
+
+/**
+ * Tworzy rachunek za parkowanie.
+ * @param {string} numerRejestracyjny - Numer rejestracyjny pojazdu.
+ * @param {Date} czas_wjazdu - Data i czas wjazdu.
+ * @param {Date} czas_wyjazdu - Data i czas wyjazdu.
+ * @param {number} numerMiejsca - Numer miejsca parkingowego.
+ * @param {number} oplata - Opłata za parkowanie.
+ */
 function obliczCzasPostoju(czasUnix) {
   const teraz = new Date();
   const czasPostojuMillis = teraz.getTime() - czasUnix * 1000; // Konwersja sekund na milisekundy
@@ -223,6 +267,13 @@ function obliczCzasPostoju(czasUnix) {
 
   return { godziny, minuty };
 }
+
+/**
+ * Wysyła informację o pojeździe na parking.
+ * @param {string} regNumber - Numer rejestracyjny pojazdu.
+ * @param {string} photo - Nazwa zdjęcia samochodu.
+ * @returns {Promise<any>} Obiekt Promise z wynikiem żądania.
+ */
 function createRecipe(numerRejestracyjny, czas_wjazdu, czas_wyjazdu, numerMiejsca, oplata) {
   // Utwórz nowe okno przeglądarki
   var newPage = window.open("", "_blank");
@@ -303,9 +354,21 @@ async function sendCarToParking(regNumber, photo) {
     throw error;
   }
 }
+
+/**
+ * Generuje błąd na stronie.
+ * @param {HTMLElement} element - Element, w którym wyświetlany jest błąd.
+ * @param {string} message - Treść błędu.
+ */
 function generateError(element,message){
   element.textContent=message;
 }
+
+/**
+ * Formatuje datę do czytelnej postaci.
+ * @param {Date} date - Data do sformatowania.
+ * @returns {string} Sformatowana data.
+ */
 function formatDate(date) {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -316,10 +379,17 @@ function formatDate(date) {
   return `${year}/${month}/${day} ${hours}:${minutes}`;
 }
 
+/**
+ * Odświeża dane na stronie.
+ */
 function refreshData(){
   getPrice();
   getParkingStatus();
 }
+
+/**
+ * Pobiera status dostępności miejsc parkingowych.
+ */
 function getParkingStatus(){
   fetch(apiBaseUrl + "/spot/number_of_free_out_of_all") // returns two numbers: number of free spots and number of all spots
   .then(response => response.json())
@@ -333,6 +403,10 @@ function getParkingStatus(){
       displayParkingStatus(occupiedParkingSpaces, totalParkingSpaces);
   } )
 }
+
+/**
+ * Pobiera informacje o cenach parkowania.
+ */
 function getPrice(){
   var priceElement = document.getElementById("price-list");
   fetch(apiBaseUrl + "/rates/all")
@@ -354,6 +428,12 @@ function getPrice(){
 
   } )
 }
+
+/**
+ * Wyświetla stan parkingu.
+ * @param {number} availableSpaces - Liczba dostępnych miejsc parkingowych.
+ * @param {number} totalSpaces - Liczba wszystkich miejsc parkingowych.
+ */
 function displayParkingStatus(availableSpaces, totalSpaces) {
   var parkingStatusElement = document.getElementById("parkin-state");
   if(availableSpaces>0)

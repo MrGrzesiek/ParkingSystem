@@ -1,4 +1,9 @@
 const api = 'http://localhost:8000';
+
+/**
+ * Funkcja asynchroniczna tworząca nawigację.
+ * @returns {Promise<HTMLDivElement>} Obietnica z elementem nawigacji.
+ */
 async function createNavi() {
 
     const userLoggedIn = localStorage.getItem('login');
@@ -88,6 +93,11 @@ async function createNavi() {
     return div;
   }
 
+
+  /**
+ * Funkcja tworząca modal.
+ * @returns {Promise<HTMLDivElement>} Obietnica z elementem modala.
+ */
   function createModal() {
     return new Promise((resolve, reject) => {
         fetch(api + "/rates/all")

@@ -60,7 +60,6 @@ def update_rates(hourly_rate, entry_grace_minutes, exit_grace_minutes):
                      exit_grace_minutes
                  )
                  )
-    logger.debug(f"Updated rates: hourly_rate: {hourly_rate}, entry_grace_minutes: {entry_grace_minutes}, exit_grace_minutes: {exit_grace_minutes}")
     return {"status": "success", "message": "Rates updated successfully!"}
 
 def get_rates_for_client(reg_number):
@@ -75,9 +74,7 @@ def get_rates_for_client(reg_number):
     """
     spot = get_spot_by_reg_number(reg_number)
     minutes = __get_minutes_for_client(spot)
-    logger.info(f"minutes{minutes}")
     rates = get_rates()
-    logger.info(f"rates {rates['entry_grace_minutes']}")
     if minutes < timedelta(minutes=rates['entry_grace_minutes']):
         return 0
     else:
@@ -103,7 +100,5 @@ def __get_minutes_for_client(spot):
                       )
                       )
     exit_time = temp[0]['CURRENT_TIMESTAMP']
-
-    logger.info(f"Got minutes for client: entry_time{entry_time}\nexit_time: {exit_time}")
     minutes = exit_time - entry_time
     return minutes

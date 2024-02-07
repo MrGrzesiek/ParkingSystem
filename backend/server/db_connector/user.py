@@ -75,14 +75,11 @@ def signin_user(email, incoming_password_hash):
        - HTTPException 401: If the provided email or password is invalid.
     """
     user = __get_user_by_email__(email)
-    logger.info(f"Got user: {user}")
     db_password_hash = user[0]['password_hash']
     if len(user) == 0:
-        print('Invalid email')
         raise HTTPException(status_code=401, detail='Invalid email')
 
     if not incoming_password_hash == db_password_hash:
-        print('Invalid password')
         raise HTTPException(status_code=401, detail='Invalid password')
     return user[0]
 
