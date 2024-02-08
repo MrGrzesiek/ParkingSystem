@@ -1,4 +1,20 @@
 # 2. Projekt Parking+ (Projekt dla 2-3 osób)
+
+Instrukcja uruchomienia: 
+
+Pobrać docker 
+
+Uruchomić dockera 
+
+Uruchomić plik start_backend.bat 
+
+Uruchomić plik frontends_server.bat 
+
+Zaczekać na uruchomienie obu plików i stworzenie bazy 
+
+Uruchomić adres pokazany w konsoli 
+ 
+
 Aplikacji dla Operatora Parkingu na 50 miejsc parkingowych. Panel aplikacji Operatora ma
 umożliwiać zarządzenie miejscami parkingowymi. Panel powinien umożliwiać podgląd live
 zajętości parkingu oraz informacje wraz z historią danego numerowanego miejsca. Przygotuj
